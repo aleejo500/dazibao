@@ -6,37 +6,44 @@
 #include <string.h> 
 #include "dazibao_lib.h"
 
-#define MAGIC "53"
+#define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 
-int creer_fichier (char * path){
-  int fd,rc,w;
-  dazibao * result = NULL;
 
- if ((fd= open("dazibao.dzb", O_WRONLY|O_CREAT, 0666)) < 0){
-    perror("open error");
-  }
 
-  creer_dazibao(100000);
+int charger_daz (char * path){
+	int fd,rc,t,r;
+	dazibao * result = NULL;
+	struct stat finfo;
+	
+	if ((fd=open(path, O_RDWR, 0666)) < 0){
+		perror("open error");
+	}
 
-  rc = lseek(fd, 8, SEEK_SET);
-  
-  if ((w=write(fd, MAGIC, MAGIC_SIZE)) < 0)
-    perror("write MAGIC 53");
-  if ((w=write(fd, "0", 1)) < 0)
-    perror("write version 0");
-  if ((w=write(fd, "0", 2)) < 0)
-    perror("write MBZ 0");
-  
-  
-  close(fd);
-  return 0;
+	if(fstat(fd,&finfo)< 0)
+	perror("stat error");	
+
+	result = (dazibao *) mmap(path,finfo.st_size,
+							  PROT_READ | PROT_WRITE,
+							  MAP_PRIVATE | MAP_ANON,-1, 0);
+	
+	 if (result == MAP_FAILED) perror("mmap error");
+	
+	// TO DO valider daz(); 
+	// TO DO switch case type contenu     
+	printf("Quel type de contenu: 2 pour text ");
+	scanf("%d", &t);
+	//printf("tapez le texte svp... ");
+	add_tlv(result,t);
+
+	close(fd);
+	return 0;
 }
 
 
 
 int main(int argc, char ** argv){
-   creer_fichier(argv[1]);
- 
+    //creer_fichier(argv[1]);
+	charger_daz(argv[1]);	
   exit(EXIT_SUCCESS);
 }
