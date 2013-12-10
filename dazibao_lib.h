@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <string.h>
 #include <fcntl.h>
+
 #define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 #define SIZE 10
@@ -16,7 +17,7 @@ typedef struct tlv{
 
 }tlv;
 
-typedef struct {
+typedef struct dazibao{
 	char * path;
 	size_t size;
 	int magic;
@@ -36,7 +37,6 @@ int list_tlv_cpt;
 
 int creer_list_tlv(){
   list_tlv = (tlv*) malloc(SIZE * sizeof(tlv));
-  // memset(&list_tlv, NULL, SIZE*sizeof(tlv));
   list_tlv_cpt = 0;
   return 0;
 }
@@ -87,7 +87,7 @@ int add_tlv(dazibao *dazchargee,int type){
 }
 
 int calculer_taille(char *cont){//TODO
-return 10;
+  return 10;
 }
 
 
