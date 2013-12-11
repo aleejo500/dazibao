@@ -1,4 +1,4 @@
-#include <sys/stat.h>
+	#include <sys/stat.h>
 #include <sys/file.h>
 #include <fcntl.h>
 #include <stdio.h>
@@ -6,7 +6,7 @@
 #include <unistd.h>
 #include <string.h> 
 #include "dazibao_lib.h"
-
+#include "load_daz.c"
 #define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 
@@ -14,7 +14,7 @@
 
 int first_menu(){
   // afficher le daz chargé
-  // on suppose la structure daz enregistrée et les infos récupérés
+  // on suppose la structure daz e	nregistrée et les infos récupérés
   int choice;
   char * buf = malloc(sizeof(char)*2);
 
@@ -33,6 +33,7 @@ int first_menu(){
   switch(choice){
   case 1:
     printf("Your choice is to add a component to your dazibao.\n Aleejo will help you. :D\n");
+	charger_daz("dazibao.dbz");	  
     break;
   case 2:
     printf("Your choice is to delete a component from your dazibao. :(\n Aleejo will help you.\n");
@@ -49,29 +50,35 @@ int first_menu(){
 }
 
 int charger_daz (char * path){
-	int fd,rc,t,r;
+	int fd,rc,t,r,taille,rd;
+	unsigned char * buf = NULL;
+	char * b;
 	dazibao * result = NULL;
 	struct stat finfo;
 	
-	if ((fd=open(path, O_RDWR, 0666)) < 0){
-		perror("open error");
+	if ((fd=open(path,  O_RDWR|O_CREAT, 0666)) < 0){
+		perror("open error here");
 	}
 
 	if(fstat(fd,&finfo)< 0)
-	perror("stat error");	
+	perror("stat error here");	
 
-	result = (dazibao *) mmap(path,finfo.st_size,
-				  PROT_READ | PROT_WRITE,
-				  MAP_PRIVATE | MAP_ANON,-1, 0);
+	taille= finfo.st_size;
+	buf = malloc(sizeof(char)*taille);
+	if( ( rd = read(fd,buf,taille)) < 0 )
+		perror("read error here");
 	
-	 if (result == MAP_FAILED) perror("mmap error");
+	result = load_daz(buf,4,taille);
 	
 	// TO DO valider daz(); 
 	// TO DO switch case type contenu     
-	printf("Quel type de contenu: 2 pour text ");
+	printf("Quel type de contenu: 2 pour text \n");
 	scanf("%d", &t);
-	//printf("tapez le texte svp... ");
-	add_tlv(result,t);
+	
+	//read(0,b, 1);
+
+	printf("tapez le texte svp... \n ");
+	//add_tlv(result,t);
 
 	close(fd);
 	return 0;
@@ -82,7 +89,7 @@ int charger_daz (char * path){
 int main(int argc, char ** argv){
   int menu_choice_test;
     //creer_fichier(argv[1]);
-  //  charger_daz(argv[1]);	
-  menu_choice_test = first_menu();
+    charger_daz(argv[1]);	
+  //menu_choice_test = first_menu();
   exit(EXIT_SUCCESS);
 }
