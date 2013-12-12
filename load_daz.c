@@ -10,9 +10,9 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
   result = (dazibao *) malloc (sizeof (dazibao));	
   int i=deb;
   int j,k,length=0;
-	tlv * debut;
-	tlv * fin;
-	char *val;
+  tlv * debut;
+  tlv * fin;
+  char *val;
 
 	printf("TLV  :%d  length MBZ ", taille); 
   while(i<taille){

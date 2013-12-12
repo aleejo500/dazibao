@@ -54,8 +54,7 @@ int ecrire_tlv(tlv *nuevotlv){
 int add_tlv(dazibao *dazchargee,int type){
   
 	tlv *nuevotlv,*courant;
-	int l=40,n;
-	char *val;
+	int l=40;
 	char buffer[l];
 	int bytes;
 	
@@ -115,7 +114,7 @@ struct tlv *creer_tlv(int t, int l, char *v){
 
 
 int creer_dazibao(long taille){
-  int fd,rc,w;
+  //int fd,rc,w;
   tlv *nuevotlv;
   dazibao * un_daz;	
   un_daz = (dazibao *) mmap(NULL,taille*sizeof(dazibao),
@@ -141,9 +140,10 @@ int creer_dazibao(long taille){
 
 
 int creer_fichier (char * path){
-	int fd,rc,w;
+	int fd,rc=0;
+	//int w;
 	dazibao * result = NULL;
-	FILE *fp;
+	//FILE *fp;
 	unsigned int bu=0;
 	if ((fd= open(path, O_WRONLY|O_CREAT, 0666)) < 0)
 		perror("open error");
@@ -155,7 +155,7 @@ int creer_fichier (char * path){
 	if ( write(fd,&bu,sizeof(bu)) <0)
 		perror("write error");
 	
-	
+       
 /*
 	if ((fp= fopen(path, "w+")) ==NULL){
 		perror("open error");
