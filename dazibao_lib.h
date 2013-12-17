@@ -140,14 +140,19 @@ int creer_dazibao(long taille){
 
 
 int creer_fichier (char * path){
-	int fd,rc=0;
+  int fl,fd,rc=0;
 	//int w;
 	dazibao * result = NULL;
 	//FILE *fp;
 	unsigned int bu=0;
+
 	if ((fd= open(path, O_WRONLY|O_CREAT, 0666)) < 0)
 		perror("open error");
-	
+
+	// debut lock
+	if ((fl=flock(fd, LOCK_EX)) != 0)
+	  perror("lock file error");	
+
 	if ( write(fd,&magia,sizeof(magia)) <0)
 		perror("write error");
 	
@@ -170,8 +175,12 @@ int creer_fichier (char * path){
 		perror("write version 0");
 	if ((w=write(fd, "0", 2)) < 0)
 		perror("write MBZ 0");
-	*/
-	
+*/
+
+	//fin lock
+	if ((fl=flock(fd, LOCK_UN)) != 0)
+	  perror("unlock file error");
+
 	close(fd);
 	return rc;
 }

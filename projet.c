@@ -14,7 +14,7 @@
 
 int charger_daz (char * path){
   //int rc,r;
-  int fd,t,taille,rd;
+  int fl,fd,t,taille,rd;
   unsigned char * buf = NULL;
   //char * b;
   dazibao * result = NULL;
@@ -24,6 +24,10 @@ int charger_daz (char * path){
     perror("open error here");
   }
 
+  //debut lock  
+  if ((fl=flock(fd, LOCK_EX)) != 0)
+    perror("lock file error");
+
   if(fstat(fd,&finfo)< 0)
     perror("stat error here");
 
@@ -32,6 +36,10 @@ int charger_daz (char * path){
   if( ( rd = read(fd,buf,taille)) < 0 )
     perror("read error here");
 	
+  //fin lock
+  if ((fl=flock(fd, LOCK_UN)) != 0)
+    perror("unlock file error");
+
   result = load_daz(buf,4,taille);
 	
   // TO DO valider daz();

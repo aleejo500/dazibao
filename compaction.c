@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <sys/mman.h>
+#include <time.h>
 #include <string.h>
 #include "lect_tlv.c"
 
@@ -84,21 +85,29 @@ void compact_tlv(int fd, unsigned char * contenu, int daz_size){
 }
 
 int compact(char * path){
-  int fd, size;
+  int fd, rc, fs, fl, size;
   struct stat status;
   unsigned char * contenu;
 
   if ((fd=open(path, O_RDWR)) < 0)
     perror("open daz to compact error");
 
-  if (fstat(fd,&status) < 0)
+  //debut lock
+  if ((fl=flock(fd, LOCK_EX)) != 0)
+    perror("lock file error");
+
+  if ((fs=fstat(fd,&status)) < 0)
     perror("fstat to get daz size error");
 
   size=status.st_size;
   contenu = malloc(sizeof(char) * size);
 
-  if (read(fd, contenu, size) < 0)
+  if ((rc=read(fd, contenu, size)) < 0)
     perror("read daz to get its contents error");
+
+  if ((fl=flock(fd, LOCK_UN)) != 0)
+    perror("unlock file error");
+  //fin lock
 
   compact_tlv(fd, contenu, status.st_size);
 

@@ -6,6 +6,6 @@ void err_sys(const char *msg) {
   exit(EXIT_FAILURE);
 }
 void err_champ(char *msg){
-  printf(msg);
+  printf("%s",msg);
   exit(1);
 }
