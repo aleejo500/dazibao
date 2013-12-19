@@ -10,9 +10,9 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
   result = (dazibao *) malloc (sizeof (dazibao));	
   int i=deb;
   int j,k,length=0;
-  tlv * debut;
-  tlv * fin;
-  char *val;
+	tlv * debut;
+	tlv * fin;
+	char *val;
 
 	printf("TLV  :%d  length MBZ ", taille); 
   while(i<taille){
@@ -37,13 +37,13 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
     //Text
     else if(tmp[i]== 2){
 		courant->type = 2;
-      printf("\n Version : %d \n",tmp[i]);
-      printf("Text version \n");
+		printf("\n Type : %d \n",tmp[i]);
+		printf(" Text version \n");
 		length=calcul_length(tmp,i);
-      i=i+3;
+		i=i+3;
 		length=length+i;
 		courant->length = length;
-      i++;
+		i++;
 		val = malloc(sizeof(char)*length);
 		k=0;
       for(j=i;j<=length;j++){
@@ -51,12 +51,12 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		  i++;
 	  }
 		courant->value = val;
-      printf("\n");
+		printf("\n --> %s",courant->value );
     }
   
     //PNG
     else if(tmp[i]== 3){    
-      printf("\nVersion : %d \n",tmp[i]);
+      printf("\n Type : %d \n",tmp[i]);
       length=calcul_length(tmp,i);
       i=i+3;   
       printf("Image PNG :  length : %i  %d\n",length,tmp[i]);
@@ -68,7 +68,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
     //JPEG
     else if(tmp[i]== 4){    
       length=calcul_length(tmp,i);
-      printf("\n Version : %d \n",tmp[i]);
+      printf("\n Type : %d \n",tmp[i]);
       i=i+3;  
       printf("Image JPEG :  length : %i  i= %d\n",length,tmp[i]);
       i=i+length+1;
@@ -78,7 +78,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 
     //COMPOUND
     else if(tmp[i]== 5){
-      printf("\n Version : %d \n",tmp[i]);
+      printf("\n Type : %d \n",tmp[i]);
       length=calcul_length(tmp,i);
       i=i+3;    
       printf("TLV Compound :  length : %i  version: %d  \n",length,tmp[i+1]);
@@ -87,12 +87,12 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
    
       load_daz(tmp,i+1,length+1);
       i = i +length+1;
-      printf("%d \n",i);      
+      printf(".... %d \n",i);      
     }
 
     //DATE  
     else if(tmp[i]== 6){
-      printf("\n Date Version : %d \n",tmp[i]);
+      printf("\n Date Type : %d \n",tmp[i]);
       //affiche DATE 
       length=calcul_length(tmp,i);
       i=i+7;

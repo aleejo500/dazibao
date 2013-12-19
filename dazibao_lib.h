@@ -42,59 +42,46 @@ int creer_list_tlv(){
 }
 
 
-int ecrire_tlv(tlv *nuevotlv){
-	
-	
-	return 0;
-}
 
-
-
-
-int add_tlv(dazibao *dazchargee,int type){
+tlv *add_tlv_txt(dazibao *dazchargee,int type){
   
 	tlv *nuevotlv,*courant;
-	int l=40;
+	int l=40,n;
+	char *val;
 	char buffer[l];
 	int bytes;
 	
 	if ((nuevotlv = (tlv *) malloc (sizeof (tlv))) == NULL) {
 		errno=EAGAIN;
-		return -1;
+		return NULL;
 	}
 
 	courant=dazchargee->tlv_fin;
 		
-	
-
-	//bytes = fread(buffer,12,sizeof(char),stdin);
-	//fcntl (STDIN_FILENO, F_SETFL, O_NONBLOCK);
-	
-//printf("tapez le texte svp..... \n");
 	bytes=read(STDIN_FILENO,buffer,l);
 	
 	if (bytes<0) {
 		perror("read error");
 	}
 
-	// to do switch case type
+	
 	if ((nuevotlv->value = (char *) malloc (l * sizeof (char))) == NULL) 
-		return -1; 
+		return NULL; 
 	
 	nuevotlv=creer_tlv(type,bytes,buffer);
 	 
+	
 	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
 	
-	courant->suivant=nuevotlv;
-	
+	//courant->suivant=nuevotlv;
+
 	nuevotlv->suivant = NULL; 
-
+	
 	dazchargee->tlv_fin = nuevotlv; 
-
 	dazchargee->size+=nuevotlv->length; 
-
+//	printf("suivant3\n ");
 	//TO Do write tlv to file &  save
-	return 0;
+	return (tlv*) nuevotlv;
 }
 
 
@@ -114,7 +101,7 @@ struct tlv *creer_tlv(int t, int l, char *v){
 
 
 int creer_dazibao(long taille){
-  //int fd,rc,w;
+  int fd,rc,w;
   tlv *nuevotlv;
   dazibao * un_daz;	
   un_daz = (dazibao *) mmap(NULL,taille*sizeof(dazibao),
@@ -140,19 +127,13 @@ int creer_dazibao(long taille){
 
 
 int creer_fichier (char * path){
-  int fl,fd,rc=0;
-	//int w;
+	int fd,rc,w;
 	dazibao * result = NULL;
-	//FILE *fp;
+	FILE *fp;
 	unsigned int bu=0;
-
 	if ((fd= open(path, O_WRONLY|O_CREAT, 0666)) < 0)
 		perror("open error");
-
-	// debut lock
-	if ((fl=flock(fd, LOCK_EX)) != 0)
-	  perror("lock file error");	
-
+	
 	if ( write(fd,&magia,sizeof(magia)) <0)
 		perror("write error");
 	
@@ -160,7 +141,7 @@ int creer_fichier (char * path){
 	if ( write(fd,&bu,sizeof(bu)) <0)
 		perror("write error");
 	
-       
+	
 /*
 	if ((fp= fopen(path, "w+")) ==NULL){
 		perror("open error");
@@ -175,13 +156,68 @@ int creer_fichier (char * path){
 		perror("write version 0");
 	if ((w=write(fd, "0", 2)) < 0)
 		perror("write MBZ 0");
-*/
-
-	//fin lock
-	if ((fl=flock(fd, LOCK_UN)) != 0)
-	  perror("unlock file error");
-
+	*/
+	
 	close(fd);
 	return rc;
 }
+
+tlv *add_tlv_picture(dazibao *dazchargee,int type){
+	
+	tlv *nuevotlv,*courant;
+	int l=40,fd,taille,rd;
+	unsigned char *val;
+	char buffer[l];
+	int bytes;
+	struct stat finfo;
+	
+	if ((nuevotlv = (tlv *) malloc (sizeof (tlv))) == NULL) {
+		errno=EAGAIN;
+		return NULL;
+	}
+	
+	courant=dazchargee->tlv_fin;
+	bytes=read(STDIN_FILENO,buffer,l);
+	
+	if (bytes<0) {
+		perror("read error");
+	}
+	
+	
+	if ((fd=open(buffer, O_RDWR, 0666)) < 0){
+		perror("open error here");
+	}
+	
+	//to do extraire donnees
+	if(fstat(fd,&finfo)< 0)
+		perror("stat error ims");	
+	
+	taille= finfo.st_size;
+	val = malloc(sizeof(char)*taille);
+	if((rd = read(fd,val,taille)) < 0 ){
+		errno=EACCES;
+		perror("read error here");
+	}
+	
+	
+	
+	if ((nuevotlv->value = (char *) malloc (l * sizeof (char))) == NULL) 
+		return NULL; 
+	
+	nuevotlv=creer_tlv(type,bytes,buffer);
+	
+	
+	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
+	
+	//courant->suivant=nuevotlv;
+	
+	nuevotlv->suivant = NULL; 
+	
+	dazchargee->tlv_fin = nuevotlv; 
+	dazchargee->size+=nuevotlv->length; 
+	//	printf("suivant3\n ");
+	//TO Do write tlv to file &  save
+	return (tlv*) nuevotlv;
+}
+
 
