@@ -33,15 +33,15 @@ int first_menu(char * path){
   
   switch(choice){
   case 1:
-    printf("Your choice is to add a component to your dazibao.\n ");
+    printf("Your choice is to add a component to your dazibao.\n Aleejo will helpp you. :D\n");
 		choice= type_menu(path); 
 		first_menu(path);  
     break;
   case 2:
-    printf("Your choice is to delete a component from your dazibao. \n");
+    printf("Your choice is to delete a component from your dazibao. :(\n Aleejo will help you.\n");
     break;
   case 3:
-    printf("Your choice is to compact your dazibao. You don't need to do a single thing. \n\n");
+    printf("Your choice is to compact your dazibao. You don't need to do a single thing. \nOur linked lists do it by themselves! :D (proud)\n");
     break;
   default:
     printf("Error : cannot have another choice than 1, 2 or 3\n");

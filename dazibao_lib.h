@@ -127,12 +127,19 @@ int creer_dazibao(long taille){
 
 
 int creer_fichier (char * path){
-	int fd,rc,w;
-	dazibao * result = NULL;
-	FILE *fp;
-	unsigned int bu=0;
+
+  
+  int fd,fl,rc=0,w;
+  dazibao * result = NULL;
+  FILE *fp;
+  unsigned int bu=0;
 	if ((fd= open(path, O_WRONLY|O_CREAT, 0666)) < 0)
 		perror("open error");
+
+	  // debut lock
+
+	if ((fl=flock(fd, LOCK_EX)) != 0)
+	  perror("lock file error");
 	
 	if ( write(fd,&magia,sizeof(magia)) <0)
 		perror("write error");
@@ -140,24 +147,13 @@ int creer_fichier (char * path){
 	lseek(fd, 4, SEEK_SET);
 	if ( write(fd,&bu,sizeof(bu)) <0)
 		perror("write error");
-	
-	
-/*
-	if ((fp= fopen(path, "w+")) ==NULL){
-		perror("open error");
-		return -1;
-	}
-	
-    rc=creer_dazibao(100);
-	fseek(fp, 0, SEEK_SET);
-	if ((w=fwrite(&magia, sizeof(magia), 1, fp)) < 0)
-		perror("write MAGIC 53");
-	if ((w=write(fd, "0", 1)) < 0)
-		perror("write version 0");
-	if ((w=write(fd, "0", 2)) < 0)
-		perror("write MBZ 0");
-	*/
-	
+
+
+ //fin lock
+
+	if ((fl=flock(fd, LOCK_UN)) != 0)
+	  perror("unlock file error");
+
 	close(fd);
 	return rc;
 }
@@ -215,7 +211,7 @@ tlv *add_tlv_picture(dazibao *dazchargee,int type){
 	
 	dazchargee->tlv_fin = nuevotlv; 
 	dazchargee->size+=nuevotlv->length; 
-	//	printf("suivant3\n ");
+
 	//TO Do write tlv to file &  save
 	return (tlv*) nuevotlv;
 }
