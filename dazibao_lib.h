@@ -74,7 +74,7 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	nuevotlv=creer_tlv(type,bytes,buffer);
 	
 	
-	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value, buffer);
+	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
 	
 
 	nuevotlv->suivant = NULL; 
