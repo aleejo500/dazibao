@@ -1,6 +1,6 @@
 #executable#
-gloutont:  glouton.c 
-	gcc glouton.c -o glouton -Wall
+dazibao:  projet.c 
+	gcc projet.c -W -o projet 
 
 clean: 
-	rm glouton 
+	rm projet
