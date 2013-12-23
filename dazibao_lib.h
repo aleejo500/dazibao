@@ -296,7 +296,7 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	
 	
-	if (ftruncate(fd,newsize) < 0)
+	if (ftruncate(fd_daz,newsize) < 0)
 		perror("Truncate daz error");
 	
 	lseek(fd_daz,taille ,SEEK_SET);
