@@ -161,12 +161,13 @@ int voir_daz(char * path){
 		perror("stat error here");	
 	
 	taille= finfo.st_size;
+	printf("taille:%d\n",taille);
 	buf = malloc(sizeof(char)*taille);
 	if((rd = read(fd,buf,taille)) < 0 ){
 		errno=EACCES;
 		perror("read error here");
 	}
-		
+	printf("rd:%d\n",rd);	
 	result = load_daz1(buf,4,taille);
 	return 1;
 }

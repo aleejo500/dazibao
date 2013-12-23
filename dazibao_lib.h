@@ -48,7 +48,7 @@ int creer_list_tlv(){
 int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	
 	tlv *nuevotlv,*courant;
-	int l=140,n;
+	int l=140,n,lk;
 	char *val;
 	char buffer[l];
 	int bytes,newsize;
@@ -74,7 +74,7 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	nuevotlv=creer_tlv(type,bytes,buffer);
 	
 	
-	printf("newtlv %d %ld %s bufff%s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value, buffer);
+	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value, buffer);
 	
 
 	nuevotlv->suivant = NULL; 
@@ -89,6 +89,8 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 		
 	}
 	
+	if ((lk=flock(fd,LOCK_EX)) < 0)
+		perror("lock");
 	
 	if (ftruncate(fd,newsize) < 0)
 		perror("Truncate daz error");
@@ -133,7 +135,12 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 		return -1;
 	}
 	
-
+	if ((lk=flock(fd,LOCK_UN)) < 0)
+		perror("unlock");
+	
+	if (close(fd)<0)
+		perror("close");
+	
 	return 1;
 }
 
