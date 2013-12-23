@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <string.h> 
+#include <time.h>
 #include "dazibao_lib.h"
 #include "load_daz.c"
 #include "write_in_daz.c"
@@ -17,20 +18,15 @@ int first_menu(char * path){
   // afficher le daz chargé
   // on suppose la structure daz e	nregistrée et les infos récupérés
   int choice;
- // char * buf = malloc(sizeof(char)*2);
-
-  printf("Sélectionner votre choix d'action en entrant le numéro correspondant\n");
+ 
+  printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
   printf("\t0 : Voir mon dazibao\n");	
   printf("\t1 : Ecrire sur mon dazibao\n");
   printf("\t2 : Supprimer un élément de mon dazibao\n");
   printf("\t3 : Campacter mon dazibao\n");
   
-  // read from 0=stdin
-//  if (read(0,buf,1) < 0)
-  //  perror("Read error");
+  
 	scanf("%d", &choice); //change pour scanf a cause du problem de tampon ouvert
-  //*(buf+1) = '\0';
- // choice = atoi(t);
   
   switch(choice){
   case 0:

@@ -4,6 +4,19 @@ int calcul_length (unsigned char *tmp,int i ){
   return ((256*256*tmp[i+1])+(256*tmp[i+2])+tmp[i+3]);
 }
 
+// MERYAM : time_t n int? pour l'affichage pt on utiliser directement les int?
+time_t calcul_date(unsigned char *tmp,int i)
+{
+	return( (256*256*256*tmp[i+1])+(256*256*tmp[i+2])+(256*tmp[i+3])+tmp[i+4] );
+}
+// fonction qui convertit et affiche la date
+void affiche_date(time_t date){
+	struct tm *tlv_date;
+	tlv_date = localtime(&date);
+	printf("\t%d-%d-%d \n",tlv_date->tm_mday,tlv_date->tm_mon +1,1900+ tlv_date->tm_year);
+}
+
+
 dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	
   dazibao * result ;
@@ -14,7 +27,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	tlv * fin;
 	char *val;
 
-	printf("TLV  :%d  length MBZ ", taille); 
+	printf("\nTaille: %d  MBZ\n ", taille); 
   while(i<taille){
 	  tlv * courant = (tlv*) malloc(sizeof(tlv));
     // printf("apres while i= %d taille = %d \n",i,taille);
@@ -117,8 +130,9 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 	tlv * debut;
 	tlv * fin;
 	char *val;
+	time_t date;
 	
-	printf("TLV  :%d  length MBZ ", taille); 
+	printf("\nTaille: %d  MBZ\n ", taille); 
 	while(i<taille){
 		tlv * courant = (tlv*) malloc(sizeof(tlv));
 		// printf("apres while i= %d taille = %d \n",i,taille);
@@ -197,10 +211,16 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 		
 		//DATE  
 		else if(tmp[i]== 6){
-			printf("\n Date Type : %d \n",tmp[i]);
-			//affiche DATE 
+			printf("\nVersion : %d \n",tmp[i]);
+			printf("Date : ");
+			//Calcul longueur 3 octets (i+3)
 			length=calcul_length(tmp,i);
-			i=i+7;
+			i=i+3;
+			//calcul date sur 4 octets i+4
+			date = calcul_date(tmp,i);
+			//Affichage DATE 
+			affiche_date(date);
+			i=i+4;
 			length=length+i;
 			load_daz(tmp,i+1,length);
 			i = i +length+1;
@@ -209,4 +229,6 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 	}//fin_while(1)
 	return result;
 }
+
+
 
