@@ -8,7 +8,6 @@
 #include <time.h>
 #include "dazibao_lib.h"
 #include "load_daz.c"
-#include "write_in_daz.c"
 #define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 
