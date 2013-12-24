@@ -23,11 +23,11 @@ int type_menu(char * path,int opc){
 
 	
 	if ((fd=open(path, O_RDWR, 0666)) < 0){
-		perror("open error here");
+	  perror("open error here");
 	}
 	
 	if(fstat(fd,&finfo)< 0)
-		perror("stat error here");	
+	  perror("stat error here");	
 	
 	taille= finfo.st_size;
 	buf = malloc(sizeof(char)*taille);
@@ -94,6 +94,7 @@ int type_menu(char * path,int opc){
 		default:
 			
 			printf("Error : cannot have another choice than 1 to 6\n");
+			close(fd);
 			return 1;
 	}
 	//result = load_daz(buf,4,taille);
@@ -128,8 +129,6 @@ int voir_daz(char * path){
 	result = load_daz1(buf,4,taille);
 	return 1;
 }
-
-
 
 
 int first_menu(char * path){
@@ -188,7 +187,7 @@ int isDZB(char * path){
 		return 0;
 	}
 	else {
-		return 1;
+		return 1;//bool inverse mais normal
 	}
 }
 
@@ -236,8 +235,6 @@ char *propose_creation(){
 int main(int argc, char ** argv){
   int menu_choice_test;
 	char *name;	
-    //creer_fichier(argv[1]);
-  //  charger_daz(argv[1]);	
 	if ( argc < 2 ){
 		name = propose_creation();
 	} else {

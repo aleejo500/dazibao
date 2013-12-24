@@ -158,7 +158,7 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 			printf("\n Type : %d \n",tmp[i]);
 			printf(" Text version \n");
 			length=calcul_length(tmp,i);
-			printf("tataille :  length : %i  %d\n",length,tmp[i]);
+			printf("tataille :  length : %d  %d\n",length,tmp[i]);
 			i=i+3;
 			length=length+i;
 			courant->length = length;
