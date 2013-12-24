@@ -23,8 +23,8 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
   result = (dazibao *) malloc (sizeof (dazibao));	
   int i=deb;
   int j,k,length=0;
-	tlv * debut;
-	tlv * fin;
+//	tlv * debut;
+//	tlv * fin;
 	char *val;
 
 	printf("\nTaille: %d  MBZ\n ", taille); 
@@ -127,8 +127,8 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 	result = (dazibao *) malloc (sizeof (dazibao));	
 	int i=deb;
 	int j,k,length=0;
-	tlv * debut;
-	tlv * fin;
+	//tlv * debut;
+	//tlv * fin;
 	char *val;
 	time_t date;
 	

@@ -48,8 +48,7 @@ int creer_list_tlv(){
 int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	
 	tlv *nuevotlv,*courant;
-	int l=140,n,lk;
-	char *val;
+	int l=140,lk;
 	char buffer[l];
 	int bytes,newsize;
 	unsigned int now=(unsigned int)time(NULL);
@@ -68,9 +67,10 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	}
 	
 	
-	if ((nuevotlv->value = (char *) malloc (l * sizeof (char))) == NULL) 
-		return -1; 
-	
+	if ((nuevotlv->value = (char *) malloc (l * sizeof(char))) == NULL) {//w
+		errno=EAGAIN;
+		return -1;
+	}
 	nuevotlv=creer_tlv(type,bytes,buffer);
 	
 	
@@ -162,7 +162,7 @@ struct tlv *creer_tlv(int t, int l, char *v){
 
 
 int creer_dazibao(long taille){
-  int fd,rc,w;
+  
   tlv *nuevotlv;
   dazibao * un_daz;	
   un_daz = (dazibao *) mmap(NULL,taille*sizeof(dazibao),
@@ -187,22 +187,17 @@ int creer_dazibao(long taille){
 }
 
 
-int creer_fichier (char * path){
+int creer_fichier (int fd){
 
-  
-  int fd,fl,rc=0,w;
-  dazibao * result = NULL;
-  FILE *fp;
-  unsigned int bu=0;
-	if ((fd= open(path, O_WRONLY|O_CREAT, 0666)) < 0)
-		perror("open error");
-
+	int fl;
+	unsigned int bu=0;
+	
 	  // debut lock
 
 	if ((fl=flock(fd, LOCK_EX)) != 0)
 	  perror("lock file error");
 	
-	if ( write(fd,&magia,sizeof(magia)) <0)
+	if (write(fd,&magia,sizeof(magia)) <0)
 		perror("write error");
 	
 	lseek(fd, 4, SEEK_SET);
@@ -216,18 +211,13 @@ int creer_fichier (char * path){
 	  perror("unlock file error");
 
 	close(fd);
-	return rc;
+	return 1;
 }
 
 int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated){
 	
 	tlv *nuevotlv,*courant;
-	
-	unsigned char *val;
-	//unsigned char *buffer=NULL;
 	char buffer[17];
-	int bytes;
-	
 	int fd, rc, lk;
 	struct stat st;
 	int buf_size,newsize;
