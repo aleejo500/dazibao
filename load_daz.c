@@ -104,9 +104,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
       i=i+3;    
       //printf("TLV Compound :  length : %i  version: %d  \n",length,tmp[i+1]);
       length=length+i;
-    
-   
-      load_daz(tmp,i+1,length+1);
+      load_daz(tmp,i+1,taille);
       i = i +length+1;
      // printf(".... %d \n",i);      
     }
@@ -211,7 +209,7 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 			length=length+i;
 			
 			
-			load_daz1(tmp,i+1,length+1);
+			load_daz1(tmp,i+1,taille);
 			i = i +length+1;
 			printf(".... %d \n",i);      
 		}

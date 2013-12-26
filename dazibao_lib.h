@@ -159,7 +159,7 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	if (close(fd)<0)
 		perror("close");
 	
-	return 1;
+	return bytes;
 }
 
 
@@ -374,5 +374,66 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	return 1;
 }
+
+
+int add_tlv_compound(dazibao *dazchargee,int type,int fd,int taille,int flag){
+	
+	tlv *nuevotlv,*courant;
+	int bytes,newsize,lk;
+
+	
+	if ((nuevotlv = (tlv *) malloc (sizeof (tlv))) == NULL) {
+		errno=EAGAIN;
+		return -1;
+	}
+	
+	courant=dazchargee->tlv_fin;
+	bytes=0;
+	
+	
+	newsize=taille+4; //entete compound
+	nuevotlv=creer_tlv(type,bytes,NULL);
+	
+	
+	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
+	
+	
+	nuevotlv->suivant = NULL; 
+	dazchargee->tlv_fin = nuevotlv; 
+	dazchargee->size+=nuevotlv->length; 
+	
+	
+	
+	
+	if ((lk=flock(fd,LOCK_EX)) < 0)
+		perror("lock");
+	
+	if (ftruncate(fd,newsize) < 0)
+		perror("Truncate daz error");
+	
+	lseek(fd,taille ,SEEK_SET);
+	if((write(fd,&nuevotlv->type,1))<=0) {
+		errno=EFAULT;
+		perror("write type error");
+		close(fd);	
+		return -1;
+	}
+	
+	lseek(fd, -3, SEEK_END);
+	if((write(fd,&bytes,3))<=0) {
+		errno=EFAULT;;
+		perror("write lenght error");
+		close(fd);	
+		return -1;
+	}
+	
+		
+	if ((lk=flock(fd,LOCK_UN)) < 0)
+		perror("unlock");
+	
+		
+	return newsize;
+}
+
 
 

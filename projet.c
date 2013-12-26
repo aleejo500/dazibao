@@ -11,11 +11,13 @@
 #define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 
+int taille_comp=0;
+
 int type_menu(char * path,int opc){
 	// afficher le daz chargé
 	// on suppose la structure daz e	nregistrée et les infos récupérés
 	int choice;
-	int fd,r,taille,rd,numcomp,i=0;
+	int fd,r=0,taille,rd,numcomp,i=0;
 	unsigned char * buf = NULL;
 	
 	dazibao * result = NULL;
@@ -63,25 +65,44 @@ int type_menu(char * path,int opc){
 		case 2:
 			printf("Tapez le texte svp... \n ");
 			r=add_tlv_txt1(result,2,fd,taille,opc);//bu
+			taille_comp+=r;
+			
+		
 			break;
 		case 3:
 			printf("Tapez le nom du fichier image... \n ");
 			r=add_tlv_picture(result,choice,fd,taille,opc);
+			taille_comp+=r;
 			break;
 		case 4:
 			printf("Tapez le nom du fichier image... \n ");
 			r=add_tlv_picture(result,choice,fd,taille,opc);
+			
+			taille_comp+=r;
 			break;
 		case 5:
 			if (opc<=4) {
 				printf("Compound\n");
 				printf("Tapez le nombre d'elements à ajouter... \n ");
 				scanf("%d", &numcomp);
+				r=add_tlv_compound(result,choice,fd,taille,opc);
 				while (i<numcomp) {
 					printf("Choisissez entre l'option 2 3 et 4\n");
 					type_menu(path,choice);
 					i++;
 				}
+			  
+				lseek(fd, taille+3, SEEK_SET);
+				if((write(fd,&taille_comp,3))<=0) {
+				  ///errno=EFAULT;
+				  perror("write lenght compound error");
+				  close(fd);	
+				  return -1;
+				}
+			  if (close(fd)<0)
+				perror("close");
+
+			  
 			}else printf("Mauvaise choix :(\n");	
 			break;
 		case 6:
