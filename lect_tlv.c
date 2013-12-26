@@ -3,7 +3,6 @@ int calcul_length (unsigned char *tmp,int i ){
   return ((256*256*tmp[i+1])+(256*tmp[i+2])+tmp[i+3]);
 }
 
-// MERYAM : time_t n int? pour l'affichage pt on utiliser directement les int?
 time_t calcul_date(unsigned char *tmp,int i)
 {
   return( (256*256*256*tmp[i+1])+(256*256*tmp[i+2])+(256*tmp[i+3])+tmp[i+4] );
