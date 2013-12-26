@@ -41,7 +41,33 @@ int creer_list_tlv(){
   return 0;
 }
 
+int add_pad_n(int fd, int taille, int indice,int type){
+  int fl;
+  //int ZEro=0;
+  char * zero[taille];
+  memset(&zero, 0, taille);
 
+  printf("\t ind %d  \n", indice);
+
+  if ((fl=flock(fd, LOCK_EX)) < 0)
+    perror("lock");
+  
+  lseek(fd,indice,SEEK_SET);
+  if ((write(fd,&type,1)) < 0)
+    perror("write");
+  /*
+  if ((write(fd,&taille,1)) < 0)
+    perror("write");
+  */
+  lseek(fd,3,SEEK_CUR);
+  if ((write(fd,&zero, taille)) < 0)
+    perror("write");
+
+  if ((fl=flock(fd, LOCK_UN)) < 0)
+    perror("unlock");
+
+  return 0;
+}
 
 int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	

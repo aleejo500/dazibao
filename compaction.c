@@ -48,7 +48,6 @@ void compact_tlv(int fd, unsigned char * contenu, int daz_size){
 
       decale(fd, i, j, tlv_size);
       printf("i %d\n",i);
-
       nexttlv_size = calcul_length(contenu, i);
       i += nexttlv_size;
       j += nexttlv_size;

@@ -147,14 +147,69 @@ int voir_daz(char * path){
 		perror("read error here");
 	}
 	//printf("rd:%d\n",rd);	
-	result = load_daz1(buf,4,taille);
+	rd = load_daz1(buf,4,taille);
 	return 1;
 }
 
+int del(char * path,int delete_index){
+  int fd,fl,rd,taille;
+  int cpt=4, delete_cpt=1;
+  struct stat finfo;
+  unsigned char * buf;	
+
+
+  if ((fd=open(path, O_RDWR, 0666)) < 0){
+    perror("open error here");
+  }
+	
+  if ((fl=flock(fd, LOCK_EX)) < 0){
+    perror("lock");
+  }
+	
+  if(fstat(fd,&finfo)< 0)
+    perror("stat error here");	
+	
+  taille= finfo.st_size;
+  buf = malloc(sizeof(char)*taille);
+  if((rd = read(fd,buf,taille)) < 0 ){
+    errno=EACCES;
+    perror("read error here");
+  }
+
+  if ((fl=flock(fd, LOCK_UN)) < 0){
+    perror("unlock");
+  }  
+
+  while (cpt <= taille){
+    if (delete_cpt == delete_index){
+      break;
+    } else {
+      taille = calcul_length(buf,cpt);
+      
+      
+      cpt += taille;
+      delete_cpt ++;
+    }
+  }
+
+  if (cpt < taille){
+    taille = calcul_length(buf,cpt);
+
+    if (taille == 1 ){
+      if (write(fd, "0", 1) < 0)
+	perror("write");
+    } else {
+      printf("tqille %d" ,taille );
+      add_pad_n(fd, taille,cpt,1);
+   
+    }
+  }
+  return 0;
+}
 
 int first_menu(char * path){
   // afficher le daz chargé
-  // on suppose la structure daz e	nregistrée et les infos récupérés
+  // on suppose la structure daz enregistrée et les infos récupérés
   int choice;
  
   printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
@@ -178,6 +233,8 @@ int first_menu(char * path){
     break;
   case 2:
     printf("Your choice is to delete a component from your dazibao. \n");
+    del(path,1);
+    first_menu(path);  
     break;
   case 3:
     printf("Your choice is to compact your dazibao. You don't need to do a single thing. \n\n");
@@ -189,6 +246,7 @@ int first_menu(char * path){
 
   return choice;
 }
+
 
 
 int existe(char * path){
