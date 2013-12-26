@@ -9,6 +9,13 @@ time_t calcul_date(unsigned char *tmp,int i)
 {
 	return( (256*256*256*tmp[i+1])+(256*256*tmp[i+2])+(256*tmp[i+3])+tmp[i+4] );
 }
+
+// MERYAM : time_t n int? pour l'affichage pt on utiliser directement les int?
+time_t calcul_datele(unsigned char *tmp,int i)
+{
+	return( tmp[i+1]+(256*tmp[i+2])+(256*256*tmp[i+3])+(256*256*256*tmp[i+4]) );
+}
+
 // fonction qui convertit et affiche la date
 void affiche_date(time_t date){
 	struct tm *tlv_date;
@@ -132,7 +139,7 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 	char *val;
 	time_t date;
 	
-	printf("\nTaille: %d  MBZ\n ", taille); 
+	printf("\nTaille: %d  MBZ1\n ", taille); 
 	while(i<taille){
 		tlv * courant = (tlv*) malloc(sizeof(tlv));
 		// printf("apres while i= %d taille = %d \n",i,taille);
@@ -204,7 +211,7 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 			length=length+i;
 			
 			
-			load_daz(tmp,i+1,length+1);
+			load_daz1(tmp,i+1,length+1);
 			i = i +length+1;
 			printf(".... %d \n",i);      
 		}
@@ -217,12 +224,12 @@ dazibao *load_daz1(unsigned char *tmp, int deb,int taille){
 			length=calcul_length(tmp,i);
 			i=i+3;
 			//calcul date sur 4 octets i+4
-			date = calcul_date(tmp,i);
+			date = calcul_datele(tmp,i);
 			//Affichage DATE 
 			affiche_date(date);
 			i=i+4;
 			length=length+i;
-			load_daz(tmp,i+1,length);
+			load_daz1(tmp,i+1,length);
 			i = i +length+1;
 		}
 		

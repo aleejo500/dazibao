@@ -74,8 +74,8 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	newsize=bytes+taille+5;
 	if (dated==6) {
 		printf("Timestamp: %d\n",now);
-		newsize+=4;
-		type=dated;
+		newsize+=8;
+		//type=dated;
 		
 	}
 	nuevotlv=creer_tlv(type,bytes,buffer);
@@ -104,6 +104,32 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	lseek(fd,taille ,SEEK_SET);
 	//lseek(fd,-bytes-3,SEEK_END);
 	
+	if (dated==6) {
+		if((write(fd,&dated,1))<=0) {
+			errno=EFAULT;
+			perror("write type error");
+			close(fd);	
+			return -1;
+		}
+		lseek(fd, 2, SEEK_CUR);
+		if((write(fd,&bytes+8,2))<=0) {
+			errno=EFAULT;;
+			perror("write lenght error");
+			close(fd);	
+			return -1;
+		}
+	
+	
+		lseek(fd, -1, SEEK_CUR);
+		if((write(fd,&now,4))<=0) {
+			errno=EFAULT;
+			perror("write dated error");
+			close(fd);	
+			return -1;
+		}
+	}
+	
+
 	if((write(fd,&nuevotlv->type,1))<=0) {
 		errno=EFAULT;
 		perror("write type error");
@@ -117,18 +143,7 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 		close(fd);	
 		return -1;
 	}
-	
-	if (dated==6) {
-		lseek(fd, 0, SEEK_CUR);
-		if((write(fd,&now,4))<=0) {
-			errno=EFAULT;
-			perror("write dated error");
-			close(fd);	
-			return -1;
-		}
-	}
-	
-
+		
 	lseek(fd,-bytes-1,SEEK_END);
 	
 	if((write(fd,&buffer,nuevotlv->length))<=0) {
@@ -270,8 +285,7 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	if (dated==6) {
 		printf("Timestamp: %d\n",now);
-		newsize+=4;
-		type=dated;
+		newsize+=8;
 		
 		
 	}
@@ -298,22 +312,24 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	lseek(fd_daz,taille ,SEEK_SET);
 	
-	if((write(fd_daz,&nuevotlv->type,1))<=0) {
-		errno=EFAULT;
-		perror("write type error");
-		close(fd_daz);	
-		return -1;
-	}
-
-	lseek(fd_daz, 2, SEEK_CUR);
-	if((write(fd_daz,&nuevotlv->length,2))<=0) {
-		errno=EFAULT;
-		perror("write lenght error");
-		close(fd_daz);	
-		return -1;
-	}
 	
 	if (dated==6) {
+		if((write(fd_daz,&dated,1))<=0) {
+			errno=EFAULT;
+			perror("write type error");
+			close(fd_daz);	
+			return -1;
+		}
+
+		lseek(fd_daz, 2, SEEK_CUR);
+		if((write(fd_daz,&nuevotlv->length,2))<=0) {
+			errno=EFAULT;
+			perror("write lenght error");
+			close(fd_daz);	
+			return -1;
+		}
+	
+	
 		lseek(fd_daz, 0, SEEK_CUR);
 		if((write(fd_daz,&now,2))<=0) {
 			errno=EFAULT;;
@@ -323,6 +339,20 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 		}
 	}
 	
+	if((write(fd_daz,&nuevotlv->type,1))<=0) {
+		errno=EFAULT;
+		perror("write type error");
+		close(fd_daz);	
+		return -1;
+	}
+	
+	lseek(fd_daz, 2, SEEK_CUR);
+	if((write(fd_daz,&nuevotlv->length,2))<=0) {
+		errno=EFAULT;
+		perror("write lenght error");
+		close(fd_daz);	
+		return -1;
+	}
 	
 	lseek(fd_daz,-nuevotlv->length-1,SEEK_END);
 	

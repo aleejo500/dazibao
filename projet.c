@@ -170,7 +170,6 @@ int first_menu(char * path){
 }
 
 
-
 int existe(char * path){
 	if ((access(path, F_OK)) == 0){
 		return 0;
