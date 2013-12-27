@@ -11,7 +11,7 @@ time_t calcul_date(unsigned char *tmp,int i)
 }
 
 // MERYAM : time_t n int? pour l'affichage pt on utiliser directement les int?
-time_t calcul_datele(unsigned char *tmp,int i)
+time_t calcul_datebige(unsigned char *tmp,int i)
 {
 	return( tmp[i+1]+(256*tmp[i+2])+(256*256*tmp[i+3])+(256*256*256*tmp[i+4]) );
 }
@@ -163,7 +163,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//Text
 		else if(tmp[i]== 2){
-		  printf("NB TLV: %d\n",++cpt);
+			printf("NB TLV: %d  i %d\n",++cpt,i);
 			courant->type = 2;
 			printf("Type : %d \n",tmp[i]);
 			printf(" Text version \n");
@@ -231,7 +231,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 			length=calcul_length(tmp,i);
 			i=i+3;
 			//calcul date sur 4 octets i+4
-			date = calcul_datele(tmp,i);
+			date = calcul_datebige(tmp,i);
 			//Affichage DATE 
 			affiche_date(date);
 			i=i+4;

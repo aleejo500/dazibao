@@ -1,3 +1,4 @@
+
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <fcntl.h>
@@ -82,7 +83,8 @@ int type_menu(char * path,int opc){
 			break;
 		case 5:
 			if (opc<=4) {
-				printf("Compound\n");
+				taille_comp=0;
+				printf("Compound %d\n", taille_comp);
 				printf("Tapez le nombre d'elements à ajouter... \n ");
 				scanf("%d", &numcomp);
 				r=add_tlv_compound(result,choice,fd,taille,opc);
@@ -132,7 +134,7 @@ int voir_daz(char * path){
 	struct stat finfo;
 	
 	
-	if ((fd=open(path, O_RDWR, 0666)) < 0){
+	if ((fd=open(path, O_RDONLY, 0666)) < 0){
 		perror("open error here");
 	}
 	
@@ -148,7 +150,8 @@ int voir_daz(char * path){
 	}
 	//printf("rd:%d\n",rd);	
 	rd = load_daz1(buf,4,taille);
-	return 1;
+	close(fd);
+	return rd;
 }
 
 int del(char * path,int delete_index){
@@ -210,40 +213,44 @@ int del(char * path,int delete_index){
 int first_menu(char * path){
   // afficher le daz chargé
   // on suppose la structure daz enregistrée et les infos récupérés
-  int choice;
+  int choice,n;
  
   printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
   printf("\t0 : Voir mon dazibao\n");	
   printf("\t1 : Ecrire sur mon dazibao\n");
   printf("\t2 : Supprimer un élément de mon dazibao\n");
   printf("\t3 : Campacter mon dazibao\n");
+  printf("\t4 : Exit\n");	
   scanf("%d", &choice); //change pour scanf a cause du problem de tampon ouvert
   
   switch(choice){
   case 0:
 	  printf("Your choice is seen your dazibao.\n ");
-	  voir_daz(path); 
-	  first_menu(path);  
+	  n=voir_daz(path); 
+	  //first_menu(path);  
+	  printf("Total tlvs-> %d.\n ",choice);  
 	  break;
 		  
   case 1:
     printf("Your choice is to add a component to your dazibao.\n ");
-		type_menu(path,0); 
-		first_menu(path);  
+	type_menu(path,0); 
+		//first_menu(path);  
     break;
   case 2:
     printf("Your choice is to delete a component from your dazibao. \n");
     del(path,1);
-    first_menu(path);  
+    //first_menu(path);  
     break;
   case 3:
     printf("Your choice is to compact your dazibao. You don't need to do a single thing. \n\n");
     break;
+  case 4:
+	 exit(EXIT_SUCCESS);
   default:
     printf("Error : cannot have another choice than 0, 1, 2 or 3\n");
     return 1;
   }
-
+  first_menu(path);
   return choice;
 }
 
