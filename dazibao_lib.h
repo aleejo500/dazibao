@@ -241,11 +241,12 @@ int creer_fichier (int fd){
 	if ((fl=flock(fd, LOCK_EX)) != 0)
 	  perror("lock file error");
 	
+	lseek(fd, 0, SEEK_SET);
 	if (write(fd,&magia,sizeof(magia)) <0)
 		perror("write error");
 	
-	lseek(fd, 2, SEEK_SET);
-	if ( write(fd,&bu,sizeof(bu)) <0)
+	
+	if ( write(fd,&bu,3) <0)
 		perror("write error");
 
 

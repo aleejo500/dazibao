@@ -93,9 +93,9 @@ int type_menu(char * path,int opc){
 					type_menu(path,choice);
 					i++;
 				}
-			  
+				printf("Cd %d\n", taille_comp);
 				lseek(fd, taille+3, SEEK_SET);
-				if((write(fd,&taille_comp,3))<=0) {
+				if((write(fd,&taille_comp,1))<=0) {
 				  ///errno=EFAULT;
 				  perror("write lenght compound error");
 				  close(fd);	
@@ -213,7 +213,7 @@ int del(char * path,int delete_index){
 int first_menu(char * path){
   // afficher le daz chargé
   // on suppose la structure daz enregistrée et les infos récupérés
-  int choice,n;
+  int choice,n=0;
  
   printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
   printf("\t0 : Voir mon dazibao\n");	
@@ -228,7 +228,7 @@ int first_menu(char * path){
 	  printf("Your choice is seen your dazibao.\n ");
 	  n=voir_daz(path); 
 	  //first_menu(path);  
-	  printf("Total tlvs-> %d.\n ",choice);  
+	  printf("Total tlvs-> %d.\n ",n);  
 	  break;
 		  
   case 1:
@@ -246,9 +246,10 @@ int first_menu(char * path){
     break;
   case 4:
 	 exit(EXIT_SUCCESS);
+	break;	  
   default:
     printf("Error : cannot have another choice than 0, 1, 2 or 3\n");
-    return 1;
+    return -1;
   }
   first_menu(path);
   return choice;

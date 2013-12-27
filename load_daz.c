@@ -130,7 +130,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	
 	dazibao * result ;
 	result = (dazibao *) malloc (sizeof (dazibao));	
-	int i=deb,cpt=0;
+	int i=deb,cpt=0,cpt_pads=0;
 	int j,k,length=0;
 	//tlv * debut;
 	//tlv * fin;
@@ -143,7 +143,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		// printf("apres while i= %d taille = %d \n",i,taille);
 		
 		if(tmp[i]==0) {
-		  printf("NB TLV: %d\n",++cpt); 
+		  printf("NB TLV pad1: %d\n",++cpt_pads); 
 			courant->type = 0;
 			courant->length = 0;
 			//      printf("\n Version : %d \n",tmp[i]); 
@@ -152,7 +152,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		}
 		//tlv
 		else if(tmp[i]== 1 ){
-		  printf("NB TLV: %d\n",++cpt);
+		  printf("NB TLV padN: %d\n",++cpt_pads);
 			courant->type = 1;
 			length = calcul_length(tmp, i);
 			courant->length = length;
