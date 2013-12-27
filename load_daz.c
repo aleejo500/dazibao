@@ -151,7 +151,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 			i++;
 		}
 		//tlv
-		else if(tmp[i]== 1 ){
+		else if(tmp[i]== 1){
 		  printf("NB TLV padN: %d\n",++cpt_pads);
 			courant->type = 1;
 			length = calcul_length(tmp, i);
@@ -163,7 +163,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//Text
 		else if(tmp[i]== 2){
-			printf("NB TLV: %d  i %d\n",++cpt,i);
+			printf("\nNB TLV: %d  i %d\n",++cpt,i);
 			courant->type = 2;
 			printf("Type : %d \n",tmp[i]);
 			printf(" Text version \n");
@@ -180,37 +180,37 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 				i++;
 			}
 			courant->value = val;
-			printf("\n --> %s \n",courant->value );
+			printf(" --> %s \n",courant->value );
 		}
 		
 		//PNG
 		else if(tmp[i]== 3){    
-		  printf("NB TLV: %d\n",++cpt);
-			printf("\n Type : %d \n",tmp[i]);
+		  printf("\nNB TLV: %d\n",++cpt);
+			printf("Type : %d \n",tmp[i]);
 			length=calcul_length(tmp,i);
 			i=i+3;   
 			printf("Image PNG :  length : %i  %d\n",length,tmp[i]);
 			//length=length+i;
 			i=i+length+1;
-			printf("\n");    
+			//printf("\n");    
 		}
 		
 		//JPEG
 		else if(tmp[i]== 4){    
-		  printf("NB TLV: %d\n",++cpt);
+		  printf("\nNB TLV: %d\n",++cpt);
 			length=calcul_length(tmp,i);
-			printf("\n Type : %d \n",tmp[i]);
+			printf("Type : %d \n",tmp[i]);
 			i=i+3;  
 			printf("Image JPEG :  length : %i  i= %d\n",length,tmp[i]);
 			i=i+length+1;
-			printf("\n");    
+			//printf("\n");    
 		}
 		
 		
 		//COMPOUND
 		else if(tmp[i]== 5){
-		  printf("NB TLV: %d\n",++cpt);
-			printf("\n Type : %d \n",tmp[i]);
+		  printf("\nNB TLV: %d\n",++cpt);
+			printf("Type : %d \n",tmp[i]);
 			length=calcul_length(tmp,i);
 			i=i+3;    
 			printf("TLV Compound :  length : %i  version: %d  \n",length,tmp[i+1]);
@@ -219,13 +219,13 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 			
 			load_daz1(tmp,i+1,taille);
 			i = i +length+1;
-			printf(".... %d \n",i);      
+			printf(".... %d END COMPOUND %d\n",i,cpt);      
 		}
 		
 		//DATE  
 		else if(tmp[i]== 6){
-		  printf("NB TLV: %d\n",++cpt);
-			printf("\nVersion : %d \n",tmp[i]);
+		  printf("\nNB TLV: %d\n",++cpt);
+			printf("Version : %d \n",tmp[i]);
 			printf("Date : ");
 			//Calcul longueur 3 octets (i+3)
 			length=calcul_length(tmp,i);
@@ -238,6 +238,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 			length=length+i;
 			load_daz1(tmp,i+1,length);
 			i = i +length+1;
+			printf(".... %d END DATE %d\n",i,cpt);  
 		}
 		
 	}//fin_while(1)

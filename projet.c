@@ -213,7 +213,7 @@ int del(char * path,int delete_index){
 int first_menu(char * path){
   // afficher le daz chargé
   // on suppose la structure daz enregistrée et les infos récupérés
-  int choice,n=0;
+  int choice,n=0,to_del;
  
   printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
   printf("\t0 : Voir mon dazibao\n");	
@@ -237,8 +237,9 @@ int first_menu(char * path){
 		//first_menu(path);  
     break;
   case 2:
-    printf("Your choice is to delete a component from your dazibao. \n");
-    del(path,1);
+    printf("Your choice is to delete a component from your dazibao. Which one?\n");
+    scanf("%d", &to_del);
+    del(path,to_del);
     //first_menu(path);  
     break;
   case 3:
