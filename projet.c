@@ -207,6 +207,7 @@ int del(char * path,int delete_index){
    
     }
   }
+	close(fd);
   return 0;
 }
 
