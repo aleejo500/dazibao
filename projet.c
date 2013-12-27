@@ -155,7 +155,7 @@ int voir_daz(char * path){
 }
 
 int del(char * path,int delete_index){
-  int fd,fl,rd,taille;
+  int fd,fl,rd,taille,tlv_taille;
   int cpt=4, delete_cpt=1;
   struct stat finfo;
   unsigned char * buf;	
@@ -184,26 +184,29 @@ int del(char * path,int delete_index){
   }  
 
   while (cpt <= taille){
+    printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
     if (delete_cpt == delete_index){
       break;
     } else {
-      taille = calcul_length(buf,cpt);
-      
-      
-      cpt += taille;
-      delete_cpt ++;
+      if ((buf[cpt] != 0) && (buf[cpt] != 1)){
+	delete_cpt ++;
+      }
+      tlv_taille = calcul_length_bis(buf,cpt);     
+      printf("%d taille tlv\n", tlv_taille); 
+      cpt += tlv_taille;
     }
+    printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
   }
 
   if (cpt < taille){
-    taille = calcul_length(buf,cpt);
+    tlv_taille = calcul_length_bis(buf,cpt);
 
-    if (taille == 1 ){
+    if (tlv_taille == 1 ){
       if (write(fd, "0", 1) < 0)
 	perror("write");
     } else {
-      printf("tqille %d" ,taille );
-      add_pad_n(fd, taille,cpt,1);
+      printf("taille %d" ,tlv_taille );
+      add_pad_n(fd, tlv_taille,cpt,1);
    
     }
   }
@@ -214,7 +217,7 @@ int del(char * path,int delete_index){
 int first_menu(char * path){
   // afficher le daz chargé
   // on suppose la structure daz enregistrée et les infos récupérés
-  int choice,n=0;
+  int choice,n=0,to_del;
  
   printf("\t Sélectionner votre choix d'action en entrant le numéro correspondant\n");
   printf("\t0 : Voir mon dazibao\n");	
@@ -238,8 +241,9 @@ int first_menu(char * path){
 		//first_menu(path);  
     break;
   case 2:
-    printf("Your choice is to delete a component from your dazibao. \n");
-    del(path,1);
+    printf("Your choice is to delete a component from your dazibao. Which one?\n");
+    scanf("%d", &to_del);
+    del(path,to_del);
     //first_menu(path);  
     break;
   case 3:
