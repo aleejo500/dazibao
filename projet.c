@@ -156,7 +156,7 @@ int voir_daz(char * path){
 
 int del(char * path,int delete_index){
   int fd,fl,rd,taille,tlv_taille;
-  int cpt=4, delete_cpt=1;
+  int cpt=4, delete_cpt=0;
   struct stat finfo;
   unsigned char * buf;	
 
@@ -182,35 +182,57 @@ int del(char * path,int delete_index){
   if ((fl=flock(fd, LOCK_UN)) < 0){
     perror("unlock");
   }  
+	
+	
+	
+	
+	while (cpt <= taille){
+		printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
+		if ((buf[cpt] >1) && (buf[cpt] < 7)){
+				delete_cpt ++;
+				printf("delcmp %d\n",delete_cpt);
+				cpt+=4;
+		}
+		if (delete_cpt == delete_index){
+			cpt-=4;
+			break;
+		}
+		
+		cpt++;  
+	}
 
-  while (cpt <= taille){
+ /* while (cpt <= taille){
     printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
-    if (delete_cpt == delete_index){
-      break;
-    } else {
-      if ((buf[cpt] != 0) && (buf[cpt] != 1)){
-	delete_cpt ++;
-      }
-      tlv_taille = calcul_length_bis(buf,cpt);     
-      printf("%d taille tlv\n", tlv_taille); 
-      cpt += tlv_taille;
-    }
-    printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
-  }
+    if (delete_cpt != delete_index){
+		if ((buf[cpt] >1) && (buf[cpt] < 7)){
+			delete_cpt ++;
+			printf("delcmp %d\n",delete_cpt);
+			
+		}
+		
+	}else {
+		
+		break;
+	}
 
-  if (cpt < taille){
-    tlv_taille = calcul_length_bis(buf,cpt);
-
-    if (tlv_taille == 1 ){
-      if (write(fd, "0", 1) < 0)
-	perror("write");
-    } else {
-      printf("taille %d" ,tlv_taille );
-      add_pad_n(fd, tlv_taille,cpt,1);
-   
-    }
+	cpt++;  
+  }*/
+	printf("cmp %d\n",cpt);
+	tlv_taille = calcul_length(buf,cpt);     
+	//printf("%d taille tlv\n", tlv_taille); 
+	//cpt += tlv_taille;
+    
+	printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
+	add_pad_n(fd, tlv_taille,cpt,1);
+  
+/*if (cpt < taille){
+	  tlv_taille = calcul_length(buf,cpt-2);
+	  printf("%d taille tlv\n", tlv_taille); 
+	  printf("taille %d" ,tlv_taille );
+	  add_pad_n(fd, tlv_taille,cpt,1);
   }
-	close(fd);
+  }*/
+  close(fd);
   return 0;
 }
 

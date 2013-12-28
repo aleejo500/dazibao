@@ -43,7 +43,6 @@ int creer_list_tlv(){
 
 int add_pad_n(int fd, int taille, int indice,int type){
   int fl;
-  //int ZEro=0;
   char * zero[taille];
   memset(&zero, 0, taille);
 

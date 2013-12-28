@@ -150,7 +150,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		}
 		//tlv
 		else if(tmp[i]== 1){
-		  printf("NB TLV padN: %d\n",++cpt_pads);
+		  printf("NB TLV padN: %d\n",++cpt_pads);//attention
 			courant->type = 1;
 			length = calcul_length(tmp, i);
 			courant->length = length;
