@@ -5,82 +5,112 @@
 #include <sys/stat.h>
 #include <sys/file.h>
 #include <sys/mman.h>
-#include <time.h>
 #include <string.h>
-#include "lect_tlv.c"
 
 
-int decale(int fd, int src_index, int dst_index, int size){
-  char *addr_src, *addr_dst;
+unsigned char * contenu;
+int decale(char * path,int curs, int nb_bytes_a_dec, int size){
+	unsigned char *rest;
+	int taille_rest,rc,fd,i,wr,fl;
   
-  if ((addr_src=mmap(NULL, size, PROT_READ, MAP_SHARED, fd, src_index)) == MAP_FAILED){
-    perror("mmap on src tlv error");
-    return -1;
-  }
-
-  if ((addr_dst=mmap(NULL, size, PROT_WRITE, MAP_SHARED, fd, dst_index)) == MAP_FAILED){
-    perror("mmap on dst position error");
-    return -1;
-  }
-
-  memcpy(addr_dst, addr_src, size);
-  return 0;
+	taille_rest=size-curs;
+	rest = malloc(sizeof(char)*taille_rest);
+	free(contenu);
+	contenu= malloc(sizeof(char)*size);
+	
+	if ((fd=open(path, O_RDWR, 0666)) < 0)
+		perror("open error here");
+	
+	if ((fl=flock(fd, LOCK_EX)) != 0)
+		perror("lock file error in decale");
+	
+	if ((rc=lseek(fd,curs+nb_bytes_a_dec,SEEK_SET)) < 0)
+		perror("seek error");
+	if ((rc=read(fd, rest, taille_rest)) < 0)
+		perror("read daz to get its contents error");
+	
+	for(i=0;i<=taille_rest;i++){
+		printf(" %03X ", rest[i]);
+		
+	}
+	printf(" \n\n ");
+	
+	if ((rc=lseek(fd,curs,SEEK_SET)) < 0)
+		perror("seek cur error ");
+	
+	if ((wr=write(fd, rest, taille_rest)) < 0)
+		perror("write daz to get its contents error");
+	
+	if (ftruncate(fd,size) < 0)
+		perror("Truncate daz error");
+		close(fd);
+	
+	if ((fd=open(path, O_RDWR, 0666)) < 0)
+		perror("open error here");
+	 
+	
+	
+	if ((rc=read(fd, contenu, size)) < 0)
+		perror("read daz to get its contents error");
+	
+	if ((fl=flock(fd, LOCK_UN)) != 0)
+		perror("unlock file error");
+	
+	for(i=0;i<=size;i++){
+		printf(" %03X ", contenu[i]);
+		
+	}
+	
+	free(rest);
+	close(fd);
+	return curs-nb_bytes_a_dec;
 }
 
-void compact_tlv(int fd, unsigned char * contenu, int daz_size){
+
+void compact_tlv(char * path, unsigned char * contenui, int daz_size){
   int i=4; // on passe l'entête
   int j=i, delete_size=0;
   int tlv_size;
-  int nexttlv_size;
-
-  while (i<=daz_size){
-    if (contenu[i]==0){
-      printf("\n Version : %d \n",contenu[i]); 
-      printf("Pad1\n");
- 
-      tlv_size = 1;
-      i = i+1;
-      delete_size++;
-
-      printf("daz size %d\n", daz_size);
-      printf("i %d\n", i);
-      printf("delete size %d\n", delete_size);
-
-      decale(fd, i, j, tlv_size);
-      printf("i %d\n",i);
-      nexttlv_size = calcul_length(contenu, i);
-      i += nexttlv_size;
-      j += nexttlv_size;
-    }
-
-    else if (contenu[i]==1){
-      printf("\n Version :");
-      printf("TLV PadN :  length MBZ ");
-      printf("i %d\n",i);
-
-      tlv_size = calcul_length(contenu,i)+3;
-      i += tlv_size;
-      delete_size += tlv_size;
-      decale(fd, i, j, tlv_size);
-
-      nexttlv_size = calcul_length(contenu, i);
-      i += nexttlv_size;
-      j += nexttlv_size;
-    }
-
-    else {
-      tlv_size = calcul_length(contenu,i)+3;
-
-      if (contenu[i]==6)
-	tlv_size += 4;
-
-      i+= tlv_size;
-      j+= tlv_size;
-    }
+  int nexttlv_size,new_cur;
+	contenu= malloc(sizeof(char)*daz_size);
+	contenu=contenui;
+  while (i<daz_size){
+		if (contenu[i]==0){
+		  printf("\n Type : %d  Pad1\n",contenu[i]); 
+		  tlv_size = 1;
+		  delete_size++;
+		  printf("delete size %d  i %d  daz size %d \n", delete_size, i,daz_size);
+		  new_cur=decale(path, i, tlv_size, daz_size);
+		  i=new_cur;
+		  printf("\ni %d newcur %d \n",i,new_cur);
+		}else if (contenu[i]==1){
+			printf("\n Type : %d  PadN\n",contenu[i]); 
+			tlv_size = calcul_length(contenu,i)+3;
+			delete_size+=tlv_size;
+			printf("delete size %d  i %d  daz size %d \n", delete_size, i,daz_size);
+			new_cur=decale(path, i, tlv_size, daz_size);
+			i=new_cur;
+			printf("\ni %d newcur %d \n",i,new_cur);
+		}else{
+			  if ((contenu[i] >1) && (contenu[i] < 7)){
+					tlv_size = calcul_length(contenu,i)+3;
+					printf("\nTLV other : %d ii%d\n",tlv_size,i);
+					if (contenu[i]==6){
+						tlv_size += 4;
+					}else{ 
+						tlv_size+=1;
+					
+					}		
+				}
+			printf("\nmierda : %d ii%d\n",tlv_size,i);
+		}	
+	i+= tlv_size;
+	
+	 
   }
   printf("%d = %d - %d\n", daz_size-delete_size, daz_size, delete_size);
-  if (ftruncate(fd, (daz_size-delete_size)) < 0)
-    perror("Truncate daz error");
+  //if (ftruncate(fd, (daz_size-delete_size)) < 0)
+	//  perror("Truncate daz error");
 }
 
 int compact(char * path){
@@ -88,7 +118,7 @@ int compact(char * path){
   struct stat status;
   unsigned char * contenu;
 
-  if ((fd=open(path, O_RDWR)) < 0)
+  if ((fd=open(path, O_RDWR,0666)) < 0)
     perror("open daz to compact error");
 
   //debut lock
@@ -101,20 +131,28 @@ int compact(char * path){
   size=status.st_size;
   contenu = malloc(sizeof(char) * size);
 
+	
+	
   if ((rc=read(fd, contenu, size)) < 0)
     perror("read daz to get its contents error");
+	
+	
+	
+	if ((fl=flock(fd, LOCK_UN)) != 0)
+		perror("unlock file error");
+	//fin lock
+	close(fd);
+	
+  compact_tlv(path, contenu, status.st_size);		
 
-  if ((fl=flock(fd, LOCK_UN)) != 0)
-    perror("unlock file error");
-  //fin lock
 
-  compact_tlv(fd, contenu, status.st_size);
+  
 
   free(contenu);
   close(fd);
   return 0;
 }
 
-int main(int argc, char ** argv){
+/*int main(int argc, char ** argv){
   return compact("exemple.dzb");
-}
+}*/

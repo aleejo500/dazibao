@@ -116,7 +116,10 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
       length=length+i;
       load_daz(tmp,i+1,length);
       i = i +length+1;
-    }
+    }else {
+		i ++;
+	}
+
   
   }//fin_while(1)
 	return result;
@@ -237,6 +240,9 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 			load_daz1(tmp,i+1,length);
 			i = i +length+1;
 			printf(".... %d END DATE %d\n",i,cpt);  
+		}
+		else {
+			i ++;
 		}
 		
 	}//fin_while(1)

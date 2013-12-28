@@ -9,6 +9,8 @@
 #include <time.h>
 #include "dazibao_lib.h"
 #include "load_daz.c"
+#include "compaction.c"
+
 #define MAGIC 53
 #define MAGIC_SIZE sizeof(MAGIC)
 
@@ -120,7 +122,7 @@ int type_menu(char * path,int opc){
 			close(fd);
 			return 1;
 	}
-	//result = load_daz(buf,4,taille);
+	
 	free(buf);
 	close(fd);
 	return choice;
@@ -247,6 +249,8 @@ int first_menu(char * path){
     break;
   case 3:
     printf("Your choice is to compact your dazibao. You don't need to do a single thing. \n\n");
+	compact(path);	  
+		  
     break;
   case 4:
 	 exit(EXIT_SUCCESS);

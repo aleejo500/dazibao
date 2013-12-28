@@ -31,7 +31,7 @@ struct tlv *list_tlv;
 struct tlv * creer_tlv(int t, int l, char *v);
 char magia = MAGIC;
 
-//dazibao * un_daz;
+
 int list_tlv_size;
 int list_tlv_cpt;
 
@@ -115,15 +115,11 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 	dazchargee->size+=nuevotlv->length; 
 	
 
-	
-	
 	if ((lk=flock(fd,LOCK_EX)) < 0)
 		perror("lock");
 	
 	if (ftruncate(fd,newsize) < 0)
 		perror("Truncate daz error");
-	
-	
 	
 	
 	lseek(fd,taille ,SEEK_SET);
@@ -329,9 +325,6 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	if ((lk=flock(fd_daz,LOCK_EX)) < 0)
 		perror("lock daz");
-
-	
-	
 	
 	if (ftruncate(fd_daz,newsize) < 0)
 		perror("Truncate daz error");
@@ -427,8 +420,6 @@ int add_tlv_compound(dazibao *dazchargee,int type,int fd,int taille,int flag){
 	nuevotlv->suivant = NULL; 
 	dazchargee->tlv_fin = nuevotlv; 
 	dazchargee->size+=nuevotlv->length; 
-	
-	
 	
 	
 	if ((lk=flock(fd,LOCK_EX)) < 0)
