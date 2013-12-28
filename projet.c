@@ -184,8 +184,6 @@ int del(char * path,int delete_index){
   }  
 	
 	
-	
-	
 	while (cpt <= taille){
 		printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
 		if ((buf[cpt] >1) && (buf[cpt] < 7)){
@@ -201,22 +199,7 @@ int del(char * path,int delete_index){
 		cpt++;  
 	}
 
- /* while (cpt <= taille){
-    printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
-    if (delete_cpt != delete_index){
-		if ((buf[cpt] >1) && (buf[cpt] < 7)){
-			delete_cpt ++;
-			printf("delcmp %d\n",delete_cpt);
-			
-		}
-		
-	}else {
-		
-		break;
-	}
-
-	cpt++;  
-  }*/
+ 
 	printf("cmp %d\n",cpt);
 	tlv_taille = calcul_length(buf,cpt);     
 	//printf("%d taille tlv\n", tlv_taille); 
@@ -225,13 +208,7 @@ int del(char * path,int delete_index){
 	printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
 	add_pad_n(fd, tlv_taille,cpt,1);
   
-/*if (cpt < taille){
-	  tlv_taille = calcul_length(buf,cpt-2);
-	  printf("%d taille tlv\n", tlv_taille); 
-	  printf("taille %d" ,tlv_taille );
-	  add_pad_n(fd, tlv_taille,cpt,1);
-  }
-  }*/
+
   close(fd);
   return 0;
 }
