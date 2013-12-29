@@ -103,7 +103,7 @@ void compact_tlv(char * path, unsigned char * contenui, int daz_size){
 	
   while (i<=daz_size && j<=daz_size){
 		if (contenu[i]==0){
-		  printf("\n Type : %d  Pad1\n",contenu[i]); 
+		  //printf("\n Type : %d  Pad1\n",contenu[i]); 
 		  tlv_size = 1;
 		  //delete_size++;
 		//  printf("delete size %d  i %d  daz size %d \n", delete_size, i,daz_size);
@@ -111,7 +111,7 @@ void compact_tlv(char * path, unsigned char * contenui, int daz_size){
 		  i=new_cur;
 	//	  printf("\ni %d newcur %d \n",i,new_cur);
 		}else if (contenu[i]==1){
-			printf("\n Type : %d  PadN\n",contenu[i]); 
+	//		printf("\n Type : %d  PadN\n",contenu[i]); 
 			tlv_size = calcul_length(contenu,i)+4;
 			//delete_size+=tlv_size;
 		//	printf("delete size %d  i %d  daz size %d \n", delete_size, i,daz_size);

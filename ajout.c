@@ -122,8 +122,8 @@ int add_tlv_txt1(dazibao *dazchargee,int type,int fd,int taille,int dated){
 		close(fd);	
 		return -1;
 	}
-	lseek(fd, 2, SEEK_CUR);
-	if((write(fd,&bytes,2))<=0) {
+	lseek(fd, 0, SEEK_CUR);
+	if((write(fd,&bytes,3))<=0) {
 		errno=EFAULT;;
 		perror("write lenght error");
 		close(fd);	
@@ -166,7 +166,7 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	courant=dazchargee->tlv_fin;
 	
 	scanf("%s", buffer);
-	printf("buf %s\n ",buffer);
+	//printf("buf %s\n ",buffer);
 	if ((fd=open(buffer,O_RDONLY,0666)) < 0){
 		perror("open");
 		free(buffer);
@@ -208,7 +208,7 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 	
 	nuevotlv=creer_tlv(type,buf_size,buf);
 	
-	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
+	//printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
 	
 	
 	nuevotlv->suivant = NULL; 
@@ -234,8 +234,8 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 			return -1;
 		}
 
-		lseek(fd_daz, 2, SEEK_CUR);
-		if((write(fd_daz,&nuevotlv->length,2))<=0) {
+		lseek(fd_daz, 0, SEEK_CUR);
+		if((write(fd_daz,&nuevotlv->length,3))<=0) {
 			errno=EFAULT;
 			perror("write lenght error");
 			close(fd_daz);	
@@ -259,8 +259,8 @@ int add_tlv_picture(dazibao *dazchargee,int type,int fd_daz,int taille,int dated
 		return -1;
 	}
 	
-	lseek(fd_daz, 2, SEEK_CUR);
-	if((write(fd_daz,&nuevotlv->length,2))<=0) {
+	lseek(fd_daz, 0, SEEK_CUR);
+	if((write(fd_daz,&nuevotlv->length,3))<=0) {
 		errno=EFAULT;
 		perror("write lenght error");
 		close(fd_daz);	
@@ -308,7 +308,7 @@ int add_tlv_compound(dazibao *dazchargee,int type,int fd,int taille,int flag){
 	nuevotlv=creer_tlv(type,bytes,NULL);
 	
 	
-	printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
+	//printf("newtlv %d %ld %s\n ",nuevotlv->type,nuevotlv->length, nuevotlv->value);
 	
 	
 	nuevotlv->suivant = NULL; 
@@ -330,7 +330,7 @@ int add_tlv_compound(dazibao *dazchargee,int type,int fd,int taille,int flag){
 		return -1;
 	}
 	
-	lseek(fd, -3, SEEK_END);
+	//lseek(fd, -3, SEEK_END);
 	if((write(fd,&bytes,3))<=0) {
 		errno=EFAULT;;
 		perror("write lenght error");

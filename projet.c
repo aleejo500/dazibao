@@ -80,7 +80,6 @@ int type_menu(char * path,int opc){
 		case 4:
 			printf("Tapez le nom du fichier image... \n ");
 			r=add_tlv_picture(result,choice,fd,taille,opc);
-			
 			taille_comp+=r;
 			break;
 		case 5:
@@ -96,8 +95,8 @@ int type_menu(char * path,int opc){
 					i++;
 				}
 				printf("Cd %d\n", taille_comp);
-				lseek(fd, taille+3, SEEK_SET);
-				if((write(fd,&taille_comp,1))<=0) {
+				lseek(fd, taille+1, SEEK_SET);
+				if((write(fd,&taille_comp,3))<=0) {
 				  ///errno=EFAULT;
 				  perror("write lenght compound error");
 				  close(fd);	
@@ -127,6 +126,50 @@ int type_menu(char * path,int opc){
 	close(fd);
 	return choice;
 }
+
+int verif_entete(char *tmp){
+	
+	int fd,rd,taille;
+	unsigned char * buf = NULL;
+	struct stat finfo;
+	
+	
+	if ((fd=open(tmp, O_RDONLY, 0666)) < 0){
+		perror("open error here");
+	}
+	
+	if(fstat(fd,&finfo)< 0)
+		perror("stat error here");	
+	
+	taille= finfo.st_size;
+	
+	buf = malloc(sizeof(char)*taille);
+	if((rd = read(fd,buf,taille)) < 0 ){
+		errno=EACCES;
+		perror("read error here");
+	}
+		
+	
+	if(buf[0]!=53) {
+		printf(" Outch Entête inconnu à bientôt \n");  
+		return -1;
+	}
+	else {
+		if(buf[1]!=0) {
+			printf(" Outch Entête inconnu à bientôt \n");  
+			return -1;
+		}
+	}
+	printf("Entête correcte.. \n"); 
+    return 1;
+	
+	
+	
+	
+}
+
+
+
 
 int voir_daz(char * path){
 	
@@ -328,13 +371,23 @@ char *propose_creation(){ //on charge ou cree un dazibao s'il n'existe pas
 int main(int argc, char ** argv){
   int menu_choice_test;
 	char *name;	//att if not exist
+	
+	
 	if ( argc < 2 ){
 		name = propose_creation();
 	} else {
+		if (existe(argv[1])<=0) {
+			printf("\t entra\n");
+			name = propose_creation();
+		}
 		name = argv[1];
 	}	
-  menu_choice_test = first_menu(name);
-  exit(EXIT_SUCCESS);
+	
+	if	(verif_entete(name)>=0){
+		menu_choice_test = first_menu(name);
+	}
+	
+	exit(EXIT_SUCCESS);
 }
 
 
