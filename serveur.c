@@ -9,34 +9,7 @@
 #include <sys/stat.h>
 
 #define BUFFER_SIZE 1024
-
-typedef struct infos{
-  char * path;
-  int fd;
-  time_t last_change;
-  int connected;
-}infos;
-
-int memdate(time_t date1, time_t date2){
-  struct tm * tm1 = localtime(&date1);
-  struct tm * tm2 = localtime(&date2);
-  printf("%02d:%02d:%02d:%02d:%02d:%02d  ",
-	 tm1->tm_year+1900,tm1->tm_mon+1,tm1->tm_mday,
-	 tm1->tm_hour,tm1->tm_min,tm1->tm_sec);
-  printf("%02d:%02d:%02d:%02d:%02d:%02d\n",
-	 tm2->tm_year+1900,tm2->tm_mon+1,tm2->tm_mday,
-	 tm2->tm_hour,tm2->tm_min,tm2->tm_sec);
-  if ( (tm1->tm_year+1900 == tm2->tm_year+1900) &&
-       (tm1->tm_mon+1 == tm2->tm_mon+1) &&
-       (tm1->tm_mday == tm2->tm_mday) &&
-       (tm1->tm_hour == tm2->tm_hour) &&
-       (tm1->tm_min == tm2->tm_min) &&
-       (tm1->tm_sec == tm2->tm_sec))
-    return 1;
-
-  else 
-    return 0;
-}
+char * notif_path;
 
 /**
  * Ecrit la date dans le fichier pointé par le file descriptor fd à la ligne indiquée
@@ -54,26 +27,56 @@ void write_date(int fd, int ligne, time_t date){
 }
 
 /**
+ * Compare date à la date stockée à la ligne indiquée du fichier notif.txt
+ * puis modifie la ligne du fichier si la date a changé
+ */
+int memdate(int ligne, time_t date){
+  int fd,rc,i;
+  char buf1[15], buf2[15];
+  struct tm * tm = localtime(&date);
+
+  if ((fd=open(notif_path, O_RDWR)) < 0){
+    perror("open notif.txt");
+    return 0;
+  }
+  if (lseek(fd,ligne*15+1, SEEK_SET) < 0){
+    perror("lseek to find date");
+    return 0;
+  }
+  if ((rc=read(fd, buf1, 14)) < 0){
+    perror("read memorized date");
+    return 0;
+  }
+  snprintf(buf2, 15,"%02d%02d%02d%02d%02d%02d", tm->tm_year+1900,tm->tm_mon+1,tm->tm_mday,tm->tm_hour,tm->tm_min,tm->tm_sec);
+  for (i=0; i<14; i++){
+    if (!(buf1[i]==buf2[i])){
+      write_date(fd,ligne,date);
+      return 0;
+    }
+  }
+  close(fd);
+  return 1;
+}
+
+/**
  * Initialise notif.txt qui contient une date de dernière modif par fichier .dzb
  * les dates y sont triées dans le même ordre d'apparition que les dazibaos dans le tableau listes_infos
  */
-infos * init(int nb_daz, char ** argv){
+char ** init(int nb_daz, char ** argv){
   int i,fd,rc,fl;
-  infos * liste_infos = malloc(sizeof(infos)*(nb_daz));
-  char path[BUFFER_SIZE];
+  char ** daz_paths = malloc(sizeof(char *)*nb_daz);
   struct stat finfo;
-  char buf[BUFFER_SIZE];
 
-  strncpy(path, getenv("HOME"), BUFFER_SIZE);
-  strncat(path, "/notif.txt", BUFFER_SIZE);
-  if ((fd=open(path, O_RDWR|O_CREAT,0666)) < 0){
+  notif_path = malloc(sizeof(char) * BUFFER_SIZE);
+  strncpy(notif_path, getenv("HOME"), BUFFER_SIZE);
+  strncat(notif_path, "/notif.txt", BUFFER_SIZE);
+  if ((fd=open(notif_path, O_WRONLY|O_CREAT,0666)) < 0){
     perror("open notif.txt");
     exit(EXIT_FAILURE);
   }
 
   for (i=1; i< nb_daz+1; i++){
-    infos inf;
-
+    char * buf = malloc(sizeof(char)*BUFFER_SIZE);
     if ((rc = open(argv[i], O_RDONLY)) > 0){
 
       if ((fl=flock(rc,LOCK_EX)) < 0)
@@ -85,49 +88,45 @@ infos * init(int nb_daz, char ** argv){
       if ((fl=flock(rc,LOCK_UN)) < 0)
 	perror("unlock");
 
-      inf.connected = 0;
-
-      printf("here 1\n");
-      inf.path = getcwd(buf, BUFFER_SIZE);
-      printf("here 2\n");
-      
-      printf("%s \n",buf);
-      strncpy(inf.path, buf, BUFFER_SIZE);
-      strncat(inf.path, "/", BUFFER_SIZE);
-      strncat(inf.path, argv[i], BUFFER_SIZE);
-      inf.fd = rc;
-      inf.last_change = finfo.st_ctime;
-      liste_infos[i-1] = inf;
-      printf("%d\n",i-1);
-      write_date(fd,i-1,inf.last_change);
-      printf("%s\n",inf.path);
+      getcwd(buf, BUFFER_SIZE);
+      strncat(buf, "/", BUFFER_SIZE);
+      strncat(buf, argv[i], BUFFER_SIZE);
+      write_date(fd,i-1,finfo.st_ctime);
+      daz_paths[i-1] = buf;
       close(rc);
     }
   }
-  return liste_infos;
+  return daz_paths;
+}
+
+void notif(int * clients, char * path){
+  int length=0;
+  while(path[length] != '\0')
+    length++;
+  printf("%s, %d",path,length);
 }
 
 int main(int argc, char ** argv){
   struct sockaddr_un server;
   int server_fd,client_fd,pid,nb_daz;
   int i,fl,k,rc;
-  infos inf;
   struct stat finfo;
-  int clients[10], nb_clients,in;
+  int nb_clients=0,in;
+  int * clients = malloc(sizeof(int)*10);
   char buf[3];
+  char ** daz_paths;
 
   if (argc < 3){
     printf("Entrez au moins 2 dazibaos\n");
-    printf("\tUsage : %s <dazibao1.dzb> <dazibao2.dzb> ... <dazibaoN.dzb>\n", argv[0]);
+    printf("\tUsage : %s daz1.dzb daz2.dzb <daz3.dzb> ... <dazN.dzb>\n", argv[0]);
     exit(EXIT_FAILURE);
   }
 
-  printf("before init daz\n");
   nb_daz = argc-1;
-  infos * liste_infos = init(argc-1, argv);
-  //  for (k=0;k<nb_daz;k++)
-    printf("%s\n", liste_infos[0].path);
-    printf("%s\n", liste_infos[1].path);
+  daz_paths = init(argc-1, argv);
+  
+  for (k=0;k<nb_daz;k++)
+    printf("%s\n", daz_paths[k]);
 
   printf("just before socket init\n");
   memset(&server, 0, sizeof(server));
@@ -139,7 +138,7 @@ int main(int argc, char ** argv){
   server.sun_family = AF_UNIX;
   strncpy(server.sun_path, "", 103);
   strncat(server.sun_path, getenv("HOME"), 103);
-  strncat(server.sun_path, "/", 107);
+  strncat(server.sun_path, "/", 103);
   strncat(server.sun_path, ".dazibao-notification-socket", 103);
 
   if (access(server.sun_path, F_OK) == 0){
@@ -160,132 +159,66 @@ int main(int argc, char ** argv){
   }
 
   while(1){
-
+      
     if ((client_fd=accept(server_fd, NULL, NULL)) < 0){
       perror("accept");
       continue;
     }
+    clients[nb_clients++] = client_fd;
 
-    if ((pid=fork()) < 0){
-      perror("fork");
-      continue;
-    }
-
-    else if (pid == 0){
-
+    while(1){
       printf("son\n");
       for (i=0; i< nb_daz; i++){
-	inf = liste_infos[i];
-	printf("%s\n", inf.path);
-	if ((rc=open(inf.path, O_RDWR)) < 0)
+	printf("%s\n", daz_paths[i]);
+	if ((rc=open(daz_paths[i], O_RDONLY)) < 0){
 	  perror("open");
-	else
-	  inf.fd = rc;
+	  continue;
+	}
 
-	if ((fl=flock(inf.fd, LOCK_EX)) < 0)
+	if ((fl=flock(rc, LOCK_EX)) < 0)
 	  perror("lock");
-	
-	if (fstat(inf.fd, &finfo) < 0)
+	  
+	if (fstat(rc, &finfo) < 0)
 	  perror("fstat");
-
-	if ((fl=flock(inf.fd,LOCK_UN)) < 0)
+	  
+	if ((fl=flock(rc,LOCK_UN)) < 0)
 	  perror("unlock");
-
+	  
 	close(rc);
-
-      printf("compare\n");
-	if ((k=memdate(inf.last_change,finfo.st_ctime)) == 0){
+	  
+	printf("compare\n");
+	if ((k=memdate(i,finfo.st_ctime)) == 0){
 	  printf("notif\n");//notif
+	  notif(clients,daz_paths[i]);
 	  continue;
 	} else if (k==1){
 	  printf("no notif\n");
+	  continue;
 	}
       }
+      printf("end for\n");
 
-      if ((in=read(STDIN_FILENO,buf,3)) <= 0){
-	perror("read");
-	continue;
-      }
-      
-      if (buf[0] == 'Q'){
-	break;
-      }
-
-    }
-
-    else {
-      printf("dad\n");
-      if ((client_fd=accept(server_fd, NULL, NULL)) < 0){
-	perror("accept");
-	continue;
-      }
-      clients[nb_clients++] = client_fd;
       printf("read stop or not\n");
-      if ((in=read(STDIN_FILENO,buf,3)) <= 0){
+      if ((in=read(STDIN_FILENO,buf,3)) < 0){
 	perror("read");
 	continue;
       }
 
-      if (buf[0] == 'Q'){
+      if (buf[0] == 'Q')
 	break;
+
+    } 
+
+
+    if (buf[0] == 'Q'){
+      for (k=0; k<nb_clients; k++){
+	printf("%d ", clients[k]);
+	close(clients[k]);
       }
-    }
-  }
-  /*
-  char buf[BUFFER_SIZE];
-  int cli_fd,rc,in;
-  pid_t pid;
-  struct sockaddr_un server;
-
-  while (1){
-
-    if ((cli_fd=accept(srv_fd, NULL, NULL)) < 0){
-      perror("accept");
-      continue;
-    }
-
-    if ((pid=fork()) < 0){
-      perror("fork");
-      continue;
-    }
-
-    else if (pid == 0){
-      while (1){
-      
-	if ((in=read(STDIN_FILENO,buf, BUFFER_SIZE)) < 0){
-	  perror("read from server stdin");
-	  close(cli_fd);
-	  continue;
-	}
-
-	if (in == 0){
-	  close(cli_fd);
-	  continue;
-	}
-      
-	if (buf[0] == 'C'){
-	  if ((rc = write(cli_fd,buf, BUFFER_SIZE)) < 0)
-	    perror("write");
-	  else if (rc==1)
-	    printf("written\n");
-	}
-    
-	if (buf[0] == 'Q'){
-	  close(cli_fd);
-	  break;
-	}  
-      }
-
-    }
-
-    else {
-      close(cli_fd);
-      continue;
+      break;
     }
   }
 
-  if (close(srv_fd) < 0)
-    perror("close srv");
-  */
+  close(server_fd);
   return 0;
 }
