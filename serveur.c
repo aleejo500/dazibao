@@ -73,7 +73,6 @@ infos * init(int nb_daz, char ** argv){
 
   for (i=1; i< nb_daz+1; i++){
     infos inf;
-
     if ((rc = open(argv[i], O_RDONLY)) > 0){
 
       if ((fl=flock(rc,LOCK_EX)) < 0)
@@ -99,6 +98,7 @@ infos * init(int nb_daz, char ** argv){
       inf.last_change = finfo.st_ctime;
       liste_infos[i-1] = inf;
       printf("%d\n",i-1);
+      printf("%s\n",liste_infos[i-1].path);
       write_date(fd,i-1,inf.last_change);
       printf("%s\n",inf.path);
       close(rc);
@@ -172,48 +172,51 @@ int main(int argc, char ** argv){
     }
 
     else if (pid == 0){
-
-      printf("son\n");
-      for (i=0; i< nb_daz; i++){
-	inf = liste_infos[i];
-	printf("%s\n", inf.path);
-	if ((rc=open(inf.path, O_RDWR)) < 0)
-	  perror("open");
-	else
-	  inf.fd = rc;
-
-	if ((fl=flock(inf.fd, LOCK_EX)) < 0)
-	  perror("lock");
-	
-	if (fstat(inf.fd, &finfo) < 0)
-	  perror("fstat");
-
-	if ((fl=flock(inf.fd,LOCK_UN)) < 0)
-	  perror("unlock");
-
-	close(rc);
-
-      printf("compare\n");
-	if ((k=memdate(inf.last_change,finfo.st_ctime)) == 0){
-	  printf("notif\n");//notif
-	  continue;
-	} else if (k==1){
-	  printf("no notif\n");
+      while(1){
+	printf("son\n");
+	for (i=0; i< nb_daz; i++){
+	  inf = liste_infos[i];
+	  printf("%s\n", inf.path);
+	  if ((rc=open(inf.path, O_RDWR)) < 0)
+	    perror("open");
+	  else
+	    inf.fd = rc;
+	  
+	  if ((fl=flock(inf.fd, LOCK_EX)) < 0)
+	    perror("lock");
+	  
+	  if (fstat(inf.fd, &finfo) < 0)
+	    perror("fstat");
+	  
+	  if ((fl=flock(inf.fd,LOCK_UN)) < 0)
+	    perror("unlock");
+	  
+	  close(rc);
+	  
+	  printf("compare\n");
+	  if ((k=memdate(inf.last_change,finfo.st_ctime)) == 0){
+	    printf("notif\n");//notif
+	    continue;
+	  } else if (k==1){
+	    printf("no notif\n");
+	  }
 	}
-      }
-
-      if ((in=read(STDIN_FILENO,buf,3)) <= 0){
-	perror("read");
-	continue;
-      }
-      
-      if (buf[0] == 'Q'){
-	break;
-      }
-
-    }
-
-    else {
+	printf("end for\n");
+	if ((in=read(STDIN_FILENO,buf,3)) <= 0){
+	  perror("read");
+	  continue;
+	}
+	printf("%c: %d", buf[0],(buf[0] == 'Q'));
+	if (buf[0] == 'Q'){
+	  printf("buf Q\n");
+	  
+	  for (k=0; k<nb_clients; k++)
+	    close(clients[k]);
+	  break;
+	  return 0;
+	}
+      } 
+    } else {
       printf("dad\n");
       if ((client_fd=accept(server_fd, NULL, NULL)) < 0){
 	perror("accept");
@@ -227,65 +230,12 @@ int main(int argc, char ** argv){
       }
 
       if (buf[0] == 'Q'){
+	for (k=0; k<nb_clients; k++)
+	  close(clients[k]);
 	break;
       }
     }
   }
-  /*
-  char buf[BUFFER_SIZE];
-  int cli_fd,rc,in;
-  pid_t pid;
-  struct sockaddr_un server;
 
-  while (1){
-
-    if ((cli_fd=accept(srv_fd, NULL, NULL)) < 0){
-      perror("accept");
-      continue;
-    }
-
-    if ((pid=fork()) < 0){
-      perror("fork");
-      continue;
-    }
-
-    else if (pid == 0){
-      while (1){
-      
-	if ((in=read(STDIN_FILENO,buf, BUFFER_SIZE)) < 0){
-	  perror("read from server stdin");
-	  close(cli_fd);
-	  continue;
-	}
-
-	if (in == 0){
-	  close(cli_fd);
-	  continue;
-	}
-      
-	if (buf[0] == 'C'){
-	  if ((rc = write(cli_fd,buf, BUFFER_SIZE)) < 0)
-	    perror("write");
-	  else if (rc==1)
-	    printf("written\n");
-	}
-    
-	if (buf[0] == 'Q'){
-	  close(cli_fd);
-	  break;
-	}  
-      }
-
-    }
-
-    else {
-      close(cli_fd);
-      continue;
-    }
-  }
-
-  if (close(srv_fd) < 0)
-    perror("close srv");
-  */
   return 0;
 }
