@@ -28,9 +28,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
   result = (dazibao *) malloc (sizeof (dazibao));	
   int i=deb;
   int j,k,length=0;
-//	tlv * debut;
-//	tlv * fin;
-	char *val;
+  unsigned	char *val;
 
 	printf("\nTaille: %d  MBZ\n ", taille); 
   while(i<taille){
@@ -135,7 +133,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	int j,k,length=0;
 	//tlv * debut;
 	//tlv * fin;
-	char *val;
+	unsigned char *val;
 	time_t date;
 	
 	printf("\nTaille: %d  MBZ1\n ", taille); 
@@ -166,10 +164,10 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		else if(tmp[i]== 2){
 			printf("\nNB TLV: %d  i %d\n",++cpt,i);
 			courant->type = 2;
-			printf("Type : %d \n",tmp[i]);
-			printf(" Text version \n");
+			printf("Type : %d  Text\n",tmp[i]);
+			//printf(" Text version \n");
 			length=calcul_length(tmp,i);
-			printf("tataille :  length : %d  %d\n",length,tmp[i]);
+			//printf("tataille :  length : %d  %d\n",length,tmp[i]);
 			i=i+3;
 			length=length+i;
 			courant->length = length;
@@ -186,7 +184,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//PNG
 		else if(tmp[i]== 3){    
-		  printf("\nNB TLV: %d\n",++cpt);
+		  printf("\nNB TLV: *** %d ***\n",++cpt);
 			printf("Type : %d \n",tmp[i]);
 			length=calcul_length(tmp,i);
 			i=i+3;   
@@ -198,7 +196,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//JPEG
 		else if(tmp[i]== 4){    
-		  printf("\nNB TLV: %d\n",++cpt);
+		  printf("\nNB TLV:*** %d ***\n",++cpt);
 			length=calcul_length(tmp,i);
 			printf("Type : %d \n",tmp[i]);
 			i=i+3;  
@@ -210,7 +208,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//COMPOUND
 		else if(tmp[i]== 5){
-		  printf("\nNB TLV: %d\n",++cpt);
+		  printf("\nNB TLV: *** %d ***\n",++cpt);
 			printf("Type : %d \n",tmp[i]);
 			length=calcul_length(tmp,i);
 			i=i+3;    
@@ -225,9 +223,8 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 		
 		//DATE  
 		else if(tmp[i]== 6){
-		  printf("\nNB TLV: %d\n",++cpt);
-			printf("Version : %d \n",tmp[i]);
-			printf("Date : ");
+		  printf("\nNB TLV: *** %d ***\n",++cpt);
+			printf("Type : %d \n Date : ",tmp[i]);
 			//Calcul longueur 3 octets (i+3)
 			length=calcul_length(tmp,i);
 			i=i+3;

@@ -8,6 +8,7 @@
 #include <string.h> 
 #include <time.h>
 #include "dazibao_lib.h"
+#include "ajout.c"
 #include "load_daz.c"
 #include "compaction.c"
 
@@ -17,8 +18,7 @@
 int taille_comp=0;
 
 int type_menu(char * path,int opc){
-	// afficher le daz chargé
-	// on suppose la structure daz e	nregistrée et les infos récupérés
+	// menu pour selectionner le type de donnee a ajouter
 	int choice;
 	int fd,r=0,taille,rd,numcomp,i=0;
 	unsigned char * buf = NULL;
@@ -132,7 +132,6 @@ int voir_daz(char * path){
 	
 	int fd,rd,taille;
 	unsigned char * buf = NULL;
-	dazibao * result = NULL;
 	struct stat finfo;
 	
 	
@@ -156,7 +155,7 @@ int voir_daz(char * path){
 	return rd;
 }
 
-int del(char * path,int delete_index){
+int del(char * path,int delete_index){// fonction de suppression
   int fd,fl,rd,taille,tlv_taille;
   int cpt=4, delete_cpt=0;
   struct stat finfo;
@@ -187,10 +186,10 @@ int del(char * path,int delete_index){
 	
 	
 	while (cpt <= taille){
-		printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
+		//printf("taille totale %d, cpt %d, tlv num %d\n", taille, cpt, delete_cpt);
 		if ((buf[cpt] >1) && (buf[cpt] < 7)){
 				delete_cpt ++;
-				printf("delcmp %d\n",delete_cpt);
+			//	printf("delcmp %d\n",delete_cpt);
 				cpt+=4;
 		}
 		if (delete_cpt == delete_index){
@@ -202,12 +201,12 @@ int del(char * path,int delete_index){
 	}
 
  
-	printf("cmp %d\n",cpt);
+	//printf("cmp %d\n",cpt);
 	tlv_taille = calcul_length(buf,cpt);     
 	//printf("%d taille tlv\n", tlv_taille); 
 	//cpt += tlv_taille;
     
-	printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
+	//printf("taille tlv %d, cpt %d, tlv num %d\n", tlv_taille, cpt, delete_cpt);
 	add_pad_n(fd, tlv_taille,cpt,1);
   
 
@@ -226,7 +225,7 @@ int first_menu(char * path){
   printf("\t2 : Supprimer un élément de mon dazibao\n");
   printf("\t3 : Campacter mon dazibao\n");
   printf("\t4 : Exit\n");	
-  scanf("%d", &choice); //change pour scanf a cause du problem de tampon ouvert
+  scanf("%d", &choice); 
   
   switch(choice){
   case 0:
@@ -267,10 +266,10 @@ int first_menu(char * path){
 
 int existe(char * path){
 	if ((access(path, F_OK)) == 0){
-		return 0;
+		return 1;
 	}
 	else {
-		return 1; 
+		return 0; 
 	}
 }
 
@@ -278,22 +277,22 @@ int isDZB(char * path){
 	char *extension;
 	extension = strrchr(path, '.');
 	if (strncmp(extension+1, "dzb", 3) == 0){
-		return 0;
+		return 1;
 	}
 	else {
-		return 1;//bool inverse mais normal
+		return 0;//bool corrige
 	}
 }
 
 
 
-char *propose_creation(){
+char *propose_creation(){ //on charge ou cree un dazibao s'il n'existe pas
 	int  rc,fd;
 	char *name;
 	int BUFFER_SIZE=17;
 	char *buf = malloc(sizeof(char)*BUFFER_SIZE);
 	
-	printf("Vous n'avez pas entré de nom de dazibao.\n");	
+	printf("Vous n'avez pas entré un de nom de dazibao.\n");	
 
 	
 	printf("Entrez le nom de votre dazibao\n");
@@ -328,14 +327,12 @@ char *propose_creation(){
 
 int main(int argc, char ** argv){
   int menu_choice_test;
-	char *name;	
+	char *name;	//att if not exist
 	if ( argc < 2 ){
 		name = propose_creation();
 	} else {
 		name = argv[1];
 	}	
-	
-	
   menu_choice_test = first_menu(name);
   exit(EXIT_SUCCESS);
 }
