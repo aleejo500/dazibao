@@ -6,11 +6,56 @@
 Projet SYSTEM Dazibao
 ------------------------------------------------------
 
-R¬éalis¬é par : Huam Erica, Castellanos Alejandro & Jamal Meryam,
+Réalisé par : Huam Erica, Castellanos Alejandro & Jamal Meryam,
 
 
-Veuillez trouver ci-joint le fichier compress¬é, 
-nomm¬é
+Veuillez trouver ci-joint le fichier compressé, 
+nommé
 -----------------------------------
 dazibao-master.tar.gz
 -----------------------------------
+
+Plan de Test:
+
+1. Dans le répertoire courant tapez make.
+2. après l'exécution du ./projet. tapez le nom d'un dazibao par paramètre. 
+ si non
+
+   Vous n'avez pas entré un de nom de dazibao.
+   Entrez le nom de votre dazibao
+
+   dazibao inexistant
+   Nouveau dazibao Crée
+
+
+3. verification de l'entête. 
+   Nothing wrong with your dazibao..
+
+
+4. maintenant suivez le menu principal
+
+Select your action by using the numbers
+	0 : Have a look at my dazibao
+	1 : Write something on dazibao
+	2 : Delete something from dazibao
+	3 : Campact my dazibao
+	4 : Exit
+
+
+5. pour Ecrire dans votre dazibao tapez 1 et vous verrez le menu de sélection du contenu.
+
+	 Select the type of the content you want to add
+	1 : PadN
+	2 : Text
+	3 : Picture .png
+	4 : Picture .jpg
+	5 : Multiple TLVs
+	6 : Dated Content
+
+
+
+
+
+
+
+

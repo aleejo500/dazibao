@@ -62,13 +62,13 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	  }
 	  //PNG
 	  else if(tmp[i]== 3){
-	    length=calcul_length_litt(tmp,i);
+	    length=calcul_length(tmp,i);
 	    i=i+3;
 	    i=i+length+1;
 	  }
 	  //JPEG
 	  else if(tmp[i]== 4){    
-	    length=calcul_length_litt(tmp,i);
+	    length=calcul_length(tmp,i);
 	    i=i+3;
 	    i=i+length+1;
 	  }
@@ -97,7 +97,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 int load_daz1(unsigned char *tmp, int deb,int taille){
 	dazibao * result ;
 	result = (dazibao *) malloc (sizeof (dazibao));	
-	int i=deb,cpt=0,cpt_pads=0;
+	int i=deb,cpt=0;
 	int j,k,length=0;
 	unsigned char *val;
 	time_t date;
@@ -120,7 +120,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		}
 		//Text
 		else if(tmp[i]== 2){
-			printf("\nNB TLV: %d \n",++cpt);
+			printf("\nNB TLV: *** %d *** \n",++cpt);
 			courant->type = 2;
 			printf("Type : %d  Text\n",tmp[i]);
 			length=calcul_length_litt(tmp,i);
@@ -141,7 +141,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		else if(tmp[i]== 3){    
 		  printf("\nNB TLV: *** %d ***\n",++cpt);
 		  printf("Type : %d \n",tmp[i]);
-		  length=calcul_length_litt(tmp,i);
+		  length=calcul_length(tmp,i);
 		  i=i+3;   
 		  printf("Image PNG :  length : %i  \n",length);
 		  i=i+length+1;
@@ -149,7 +149,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		//JPEG
 		else if(tmp[i]== 4){    
 		  printf("\nNB TLV:*** %d ***\n",++cpt);
-		  length=calcul_length_litt(tmp,i);
+		  length=calcul_length(tmp,i);
 		  printf("Type : %d \n",tmp[i]);
 		  i=i+3;  
 		  printf("Image JPEG :  length : %i  \n",length);
@@ -159,7 +159,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		else if(tmp[i]== 5){
 		  printf("\nNB TLV: *** %d ***\n",++cpt);
 		  printf("Type : %d \n",tmp[i]);
-		  length=calcul_length_litt(tmp,i);
+		  length=calcul_length(tmp,i);
 		  i=i+3;    
 		  printf("TLV Compound :  length : %i  version: %d  \n",length,tmp[i+1]);
 		  length=length+i;

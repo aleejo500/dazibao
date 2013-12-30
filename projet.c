@@ -44,11 +44,11 @@ int type_menu(char * path,int opc){
 
   result = load_daz(buf,4,taille);
   printf("Select the type of the content you want to add\n");
-  printf("\t1 : PadN\n");
+  //printf("\t1 : PadN\n");
   printf("\t2 : Text\n");
   printf("\t3 : Picture .png\n");
   printf("\t4 : Picture .jpg\n");
-  printf("\t5 : Mulpitle TLVs\n");
+  printf("\t5 : Multiple TLVs\n");
   printf("\t6 : Dated Content\n");
 	
   scanf("%d", &choice);
@@ -56,9 +56,7 @@ int type_menu(char * path,int opc){
     opc=choice;
  
   switch(choice){
-  case 1:
-    printf("PadN added at the end of your dazibao\n ");  
-    break;
+  
   case 2:
     printf("Please enter your text... \n ");
     r=add_tlv_txt1(result,2,fd,taille,opc);
