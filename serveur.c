@@ -105,7 +105,7 @@ int main(int argc, char ** argv){
   int server_fd,client_fd,pid,nb_daz;
   int i,fl,k,rc;
   struct stat finfo;
-  int nb_clients=0,in;
+  int nb_clients=0;
   int * clients = malloc(sizeof(int)*MAX_CLIENTS);
   char buf[3];
   char ** daz_paths;
@@ -183,9 +183,9 @@ int main(int argc, char ** argv){
 	  if ((k=memdate(i,finfo.st_ctime)) == 0){
 	    notif(clients,daz_paths[i]);
 	    printf("\n %s has been changed", daz_paths[i]);
-	    //break;
+	    break;
 	  } else if (k==1){
-	    //continue;
+	    continue;
 	  }
 	}
       } 

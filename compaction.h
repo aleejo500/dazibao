@@ -19,8 +19,6 @@ int decale(char * path,int curs, int nb_bytes_a_dec, int size){
 	if ((rc=read(fd, rest, taille_rest)) < 0)
 		perror("decale function, read");
 	
-	printf(" \n\n ");
-	
 	if ((rc=lseek(fd,curs,SEEK_SET)) < 0)
 		perror("decale function, seek cursor");
 	
