@@ -312,7 +312,7 @@ int del(char * path,int delete_index){// fonction de suppression
     }  
     cpt++;  
   }
-  tlv_taille = calcul_length_litt(buf,cpt);
+  tlv_taille = calcul_length(buf,cpt);
   add_pad_n(fd, tlv_taille,cpt,1);
   close(fd);
   return 0;

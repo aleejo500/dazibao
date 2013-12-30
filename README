@@ -42,6 +42,8 @@ Select your action by using the numbers
 	4 : Exit
 
 
+
+
 5. pour Ecrire dans votre dazibao tapez 1 et vous verrez le menu de sŽlection du contenu.
 
 	 Select the type of the content you want to add
@@ -52,7 +54,37 @@ Select your action by using the numbers
 	5 : Multiple TLVs
 	6 : Dated Content
 
+6.affichage
 
+0
+Check your dazibao out.
+ 
+Taille: 17119  MBZ1
+ 
+NB TLV: *** 1 *** 
+Type : 2  Text
+ --> Hola mundo!!
+ 
+
+NB TLV: *** 2 ***
+Type : 3 
+Image PNG :  length : 317  
+
+NB TLV:*** 3 ***
+Type : 4 
+Image JPEG :  length : 16779  
+Total TLVs-> 3.
+
+
+
+
+
+7. Delete selectionnez un NB TLV: *** # ***
+
+
+8. compassion automatize Patientez quelques instants.
+
+9.Exit---> Sortie.
 
 
 
