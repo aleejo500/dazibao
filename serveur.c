@@ -12,10 +12,6 @@
 #define MAX_CLIENTS 20
 char * notif_path;
 
-/**
- * Ecrit la date dans le fichier pointé par le file descriptor fd à la ligne indiquée
- * format de la date : AAAAMMJJHHMMSS
- */
 void write_date(int fd, int ligne, time_t date){
   struct tm * t = localtime(&date);
   char madate[15];
@@ -27,10 +23,6 @@ void write_date(int fd, int ligne, time_t date){
     perror("write_date function, write");
 }
 
-/**
- * Compare date à la date stockée à la ligne indiquée du fichier notif.txt
- * puis modifie la ligne du fichier si la date a changé
- */
 int memdate(int ligne, time_t date){
   int fd,rc,i;
   char buf1[15], buf2[15];
@@ -59,10 +51,6 @@ int memdate(int ligne, time_t date){
   return 1;
 }
 
-/**
- * Initialise notif.txt qui contient une date de dernière modif par fichier .dzb
- * les dates y sont triées dans le même ordre d'apparition que les dazibaos dans le tableau listes_infos
- */
 char ** init(int nb_daz, char ** argv){
   int i,fd,rc,fl;
   char ** daz_paths = malloc(sizeof(char *)*nb_daz);
@@ -104,7 +92,6 @@ void notif(int * clients, char * path){
   int length=0,wr,i;
   while(path[length] != '\0')
     length++;
-  //printf("%s\n%d\n",path,length);
   for (i=0; i<MAX_CLIENTS; i++){
     if (clients[i] != 0){
       if ((wr=write(clients[i], path, length)) < 0)
@@ -142,7 +129,7 @@ int main(int argc, char ** argv){
   }
 
   server.sun_family = AF_UNIX;
-  strncpy(server.sun_path, getenv("HOME"), 103);
+  strncpy(server.sun_path, getenv("HOME"), 107);
   strncat(server.sun_path, "/.dazibao-notification-socket", 107);
 
   if (access(server.sun_path, F_OK) == 0){
@@ -169,40 +156,50 @@ int main(int argc, char ** argv){
     }
     clients[nb_clients++] = client_fd;
 
-    while(1){
-      for (i=0; i< nb_daz; i++){
-	if ((rc=open(daz_paths[i], O_RDONLY)) < 0){
-	  printf("%d ", i);
-	  perror("server main, open");
-	  continue;
-	}
+    if ((pid=fork()) < 0){
+      perror("server main, fork");
+      continue;
+    }
 
-	if ((fl=flock(rc, LOCK_EX)) < 0)
-	  perror("server main, lock");
-	  
-	if (fstat(rc, &finfo) < 0)
-	  perror("server main, fstat");
-	  
-	if ((fl=flock(rc,LOCK_UN)) < 0)
-	  perror("server main, unlock");
-	  
-	close(rc);
-	if ((k=memdate(i,finfo.st_ctime)) == 0){
-	  notif(clients,daz_paths[i]);
-	  printf("\n %s has been changed", daz_paths[i]);
-	  buf[0] = 'Q';
-	  break;
-	} else if (k==1){
-	  continue;
-	}
-      }
-    } 
+    else if (pid == 0){
+      while(1){
+	for (i=0; i< nb_daz; i++){
+	  if ((rc=open(daz_paths[i], O_RDONLY)) < 0){
+	    printf("%d ", i);
+	    perror("server main, open");
+	    continue;
+	  }
 
-    if (buf[0] == 'Q'){
-      for (k=0; k<nb_clients; k++){
-	close(clients[k]);
+	  if ((fl=flock(rc, LOCK_EX)) < 0)
+	    perror("server main, lock");
+	  
+	  if (fstat(rc, &finfo) < 0)
+	    perror("server main, fstat");
+	  
+	  if ((fl=flock(rc,LOCK_UN)) < 0)
+	    perror("server main, unlock");
+	  
+	  close(rc);
+	  if ((k=memdate(i,finfo.st_ctime)) == 0){
+	    notif(clients,daz_paths[i]);
+	    printf("\n %s has been changed", daz_paths[i]);
+	    //break;
+	  } else if (k==1){
+	    //continue;
+	  }
+	}
+      } 
+    }
+    
+    else {
+      if (buf[0] == 'Q'){
+	for (k=0; k<nb_clients; k++){
+	  close(clients[k]);
+	}
+	break;
+      } else {
+	continue;
       }
-      break;
     }
   }
   close(server_fd);
