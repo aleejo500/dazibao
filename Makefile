@@ -1,6 +1,6 @@
 #executable#
 dazibao:  projet.c
-	gcc projet.c -Wall -o projet  
+	gcc -Wall -g projet.c -o projet  
 	
 
 clean: 
