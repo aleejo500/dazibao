@@ -47,7 +47,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	  //Text
 	  else if(tmp[i]== 2){
 	    courant->type = 2;
-	    length=calcul_length_litt(tmp,i);
+	    length=calcul_length(tmp,i);
 	    i=i+3;
 	    length=length+i;
 	    courant->length = length;
@@ -74,7 +74,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	  }
 	  //COMPOUND
 	  else if(tmp[i]== 5){
-	    length=calcul_length_litt(tmp,i);
+	    length=calcul_length(tmp,i);
 	    i=i+3;
 	    length=length+i;
 	    load_daz(tmp,i+1,taille);
@@ -82,7 +82,7 @@ dazibao *load_daz(unsigned char *tmp, int deb,int taille){
 	  }
 	  //DATE  
 	  else if(tmp[i]== 6){ //affiche DATE 
-	    length=calcul_length_litt(tmp,i);
+	    length=calcul_length(tmp,i);
 	    i=i+7;
 	    length=length+i;
 	    load_daz(tmp,i+1,length);
@@ -114,7 +114,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		//PadN
 		else if(tmp[i]== 1){
 		  courant->type = 1;
-		  length = calcul_length_litt(tmp, i);
+		  length = calcul_length(tmp, i);
 		  courant->length = length;
 		  i=i+length;
 		}
@@ -123,7 +123,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 			printf("\nNB TLV: *** %d *** \n",++cpt);
 			courant->type = 2;
 			printf("Type : %d  Text\n",tmp[i]);
-			length=calcul_length_litt(tmp,i);
+			length=calcul_length(tmp,i);
 			i=i+3;
 			length=length+i;
 			courant->length = length;
@@ -172,7 +172,7 @@ int load_daz1(unsigned char *tmp, int deb,int taille){
 		  printf("\nNB TLV: *** %d ***\n",++cpt);
 		  printf("Type : %d \n Date : ",tmp[i]);
 		  //Calcul longueur 3 octets (i+3)
-		  length=calcul_length_litt(tmp,i);
+		  length=calcul_length(tmp,i);
 		  i=i+3;
 		  //calcul date sur 4 octets i+4
 		  date = calcul_datebige(tmp,i);
