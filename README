@@ -6,29 +6,29 @@
 Projet SYSTEM Dazibao
 ------------------------------------------------------
 
-R�alis� par : Huam Erica, Castellanos Alejandro & Jamal Meryam,
+RŽalisŽ par : Huam Erica, Castellanos Alejandro & Jamal Meryam,
 
 
-Veuillez trouver ci-joint le fichier compress�, 
-nomm�
+Veuillez trouver ci-joint le fichier compressŽ, 
+nommŽ
 -----------------------------------
 dazibao-master.tar.gz
 -----------------------------------
 
 Plan de Test:
 
-1. Dans le r�pertoire courant tapez make.
-2. apr�s l'ex�cution du ./projet. tapez le nom d'un dazibao par param�tre. 
+1. Dans le rŽpertoire courant tapez make.
+2. aprs l'exŽcution du ./projet. tapez le nom d'un dazibao par paramtre. 
  si non
 
-   Vous n'avez pas entr� un de nom de dazibao.
+   Vous n'avez pas entrŽ un de nom de dazibao.
    Entrez le nom de votre dazibao
 
    dazibao inexistant
-   Nouveau dazibao Cr�e
+   Nouveau dazibao CrŽe
 
 
-3. verification de l'ent�te. 
+3. verification de l'entte. 
    Nothing wrong with your dazibao..
 
 
@@ -44,7 +44,7 @@ Select your action by using the numbers
 
 
 
-5. pour Ecrire dans votre dazibao tapez 1 et vous verrez le menu de s�lection du contenu.
+5. pour Ecrire dans votre dazibao tapez 1 et vous verrez le menu de sŽlection du contenu.
 
 	 Select the type of the content you want to add
 	1 : PadN
@@ -85,6 +85,627 @@ Total TLVs-> 3.
 8. compassion automatize Patientez quelques instants.
 
 9.Exit---> Sortie.
+
+
+
+ESIGETEL
+Établissement d'enseignement supérieur associatif reconnu par l'État 
+Habilité par la CTI à délivrer le Diplôme d'Ingénieur et le Grade de Master 
+
+
+ 
+
+
+RAPPORT DE STAGE PROFESSIONNEL
+
+
+« NAJAB Manal »
+Élève ingénieur  3ème année  
+Promotion 2015
+
+
+
+« Déploiement d’un outil de gestion de l’IT au sein de la SOCIETE GENERALE»
+
+
+
+Année 2014/2015
+
+Stage d’études effectué au sein de la: Société Générale 
+
+Sous la responsabilité  de  
+-M. BOITARD Olivier, « Fonction du maître de stage». 
+-Mme BLANCON Mélanie, « Tutrice de stage »
+-M. Klai Kaiss, « Tuteur ESIGETEL»
+
+Remerciements
+J’aimerais adresser mes remerciements à Mélanie BLANCON, ma tutrice de stage ainsi qu’à Olivier BOITARD, mon maitre de stage, responsable de la tour de contrôle où j’ai effectué mon stage pour m’avoir fait confiance et permis d’effectuer mon stage au sein de la SOCIETE GENERALE
+Je tiens aussi à remercier mes collègues de la tour de contrôle avec qui je travaillais quotidiennement :
+Stéphane KONE	
+Nicolas BONNIER
+Michael RODRIGUO
+Fabrice GUILLET 
+Jean-Philippe LE HEN
+Michael LARROQUE
+Fouad CHIBA
+
+Je tiens à remercier également Mr Yann PHILIPPE et Mr Pierre-Yves AIMON de m’avoir accueillie au sein de l’équipe OPM/MKT et de m'avoir offert une chance de tester mes connaissances et d'en acquérir beaucoup d'autres.
+J’exprime également ma gratitude à l’égard de Mr Samir SROUR et à tous les membres de la SOCIETE GENERALE que j’ai pu rencontrer pour leur accueil amical et pour m’avoir permis de travailler dans d’excellentes conditions.
+
+Je tiens à adresser mes remerciements à mon tuteur de l’ESIGETEL Mr Kais KLAI ainsi que toute l’équipe pédagogique de l’ESIGETEL-EFREI pour m’avoir accompagnée tout au long de mon stage.
+
+
+
+
+
+
+
+
+SOMMAIRE
+Remerciements	- 2 -
+SOMMAIRE	- 3 -
+INTRODUCTION	- 2 -
+I.	La Société Générale : 1er acteur financier européen	- 3 -
+1.	Organisation	- 3 -
+A.	Les 3 lignes métiers de la Société Générale	- 3 -
+B.	Les 3 lignes métiers de la Société Générale	- 4 -
+2.	L’entité RESG au sein de la Société Générale	- 8 -
+A.	Présentation du département des services technologiques (GTS)	- 9 -
+B.	Présentation du département Market :	- 10 -
+C.	Présentation de l’équipe responsable du pilotage des opérations (OPM)	- 10 -
+II.	Le Projet : Déploiement d’un nouvel outil de gestion de l’IT	- 12 -
+1.	Contexte	- 12 -
+A.	Le département informatique de le SOCIETE GENERALE	- 12 -
+B.	Problématique	- 14 -
+C.	Périmètre et durée du projet	- 15 -
+2.	Les différentes phases du projet	- 16 -
+A.	L’analyse des besoins	- 16 -
+B.	La phase de construction et de planification	- 17 -
+C.	La phase de conduite et de pilotage	- 18 -
+D.	La phase de clôture et d’évaluation	- 19 -
+3.	Mes deux projets	- 20 -
+A.	Projet 1 : La migration des 64 outils satellites	- 20 -
+B.	La migration du catalogue de services d’iTrack : EasyTrack	- 23 -
+CONCLUSION	- 26 -
+1.	Bilan professionnel	- 26 -
+2.	Bilan personnel	- 27 -
+Table des figures	- 28 -
+Webographie	- 29 -
+Annexe	- 30 -
+1.	Process Golden Rules: Release management	- 30 -
+2.	Process Golden Rules: Incident management	- 31 -
+3.	Processes Golden Rules - Problem Management	- 32 -
+
+
+INTRODUCTION
+La troisième année du cycle ingénieur se conclut par un stage de fin d’études d’un minimum de six mois.
+Cette étape, qui se déroule dans une entreprise, va me permettre d’acquérir de véritables comportements d’ingénieurs et me conduire ainsi vers une insertion rapide dans le monde du travail. Pour rappel, le but de ce stage est d’être amené à conduire une mission, à présenter et mener à bien une solution technique et/ou commerciale intégrant des aspects pluridisciplinaires et de conduire l’élaboration d’une solution globale qui réponde parfaitement à la demande de l’entreprise.
+J’ai orienté mes recherches de stage vers une entreprise de grande taille car je souhaitais avoir à la fin de ma scolarité une vue d’ensemble des tailles de sociétés qui peuplent notre économie.
+Une autre raison pour laquelle j’ai choisi ce stage fut la découverte de nouvelles technologies et d’un nouveau secteur à savoir le secteur de la finance associé à l’IT, secteur qui m’était encore inconnu.
+Le secteur bancaire est en perpétuelle évolution, ce qui a renforcé mes motivations pour rejoindre ce monde qui m’intriguait.
+C’est pourquoi j’ai pris contact avec la SOCIETE GENERALE, fidèle partenaire de l’ESIGETEL-EFREI  et dont nous avons entendu beaucoup de bien de la part des anciens de l’école.
+Dans un premier temps, je décrirai le contexte de ma mission. Cette partie comprendra une présentation des structures de la SOCIETE GENERALE ainsi que du pôle ou j’ai été affectée. Ensuite, je décrirai brièvement mes conditions de travail.
+Dans un deuxième temps, je présenterai le projet auquel j’ai participé avec les différentes étapes de sa réalisation.
+Enfin je décrirai l’ensemble de mes activités au cours de ce stage et principalement le pilotage de deux importantes parties du projet. 
+Pour conclure, je ferai une synthèse sur le déroulement du stage et sur tout ce que j’ai pu réaliser et observer lors de ces six mois.  
+
+
+
+
+
+
+
+
+
+La Société Générale : 1er acteur financier européen
+
+Organisation
+Les 3 lignes métiers de la Société Générale
+La Société Générale est l’un des premiers groupes européens de services bancaires et financiers. Elle s’appuie sur le modèle de banque universelle, et allie solidité financière et stratégie de croissance durable. 
+Son ambition est de devenir la première banque relationnelle et, pour ce faire, elle a défini trois priorités stratégiques pour les années à venir : 
+Poursuivre l’amélioration du service client tout en restant leader en matière d’innovation.
+Capter la croissance en développant l’activité et en accroissant les synergies 
+Dégager une rentabilité durable. 
+Ces trois priorités s’accompagnent de valeurs fortes telles que l’esprit d’équipe, l’innovation, l’engagement et la responsabilité. 
+La Société Générale s’appuie sur près de 150 000 collaborateurs à travers le monde, elle compte 121 nationalités réparties dans 76 pays différents, et compte 32 000 000 clients à travers le monde. Son Produit Net Bancaire (PNB, équivalent du chiffre d’affaire pour les entreprises) est de 22,8 milliards d’euros.
+
+Figure1: Implantation de la Société Générale dans le Monde
+La Société Générale est organisée en trois lignes : Des métiers offrant une large palette de conseils et de solutions financières sur mesure aux particuliers, entreprises et investisseurs institutionnels. Il s’agit de : 
+La banque de détail en France.
+La banque de détail à l’international, services financiers et assurances. 
+La banque de financement et d’investissement, banque privée, gestion d’actifs et métier titres. 
+
+Figure 2 : les 3 lignes métiers de la Société Générale
+
+Les 3 lignes métiers de la Société Générale
+La banque détail France (RBDF) est une ligne métier composée d’un seul pôle.
+Elle dispose de trois enseignes complémentaires : 
+Société Générale : la banque nationale de référence qui accompagne une clientèle diversifiée de particuliers, professionnels et entreprises 
+Crédit du Nord : le groupement de banques régionales dont le modèle est celui d’une banque de proximité 
+Boursorama Banque : la banque en ligne leader en France sur le courtage et l’information financière en ligne notamment 
+
+Figure3 : implantation de la banque de détail en France
+La banque de détail à l’international (IBFS), services financiers et assurances se compose de 2 pôles métiers 
+Elle s’appuie sur la mise en œuvre du modèle de banque universelle, tout en s’adaptant aux spécificités locales. Son organisation repose sur quelques grandes régions : l’Europe, la Russie, l’Afrique/Asie/Méditerranée et l’Outre-Mer.
+
+Figure 4 : implantation de la banque de détail à l’international
+
+Les services financiers offrent une expertise selon trois axes métiers : 
+L’assurance : Société Générale Insurance (SGI) développe son expertise dans     l’assurance des personnes et l’assurance dommages 
+La location longue durée et gestion de flottes automobiles : ALD Automotive développe depuis 50 ans une gamme d’outils permettant le pilotage, la gestion et l’optimisation des parcs automobiles 
+Le financement des ventes et des biens d’équipement professionnel : Société Générale Equipment Finance (SGEF) propose ses services de financement des ventes et des biens pour tout type d’entreprise. 
+
+
+Figure 5 : Implantation des services financiers de la Société Générale 
+La banque de financement et d’investissement, banque privée, gestion d’actifs et métier titres (GBIS) compte 4 pôles métiers : 
+La Banque de Financement et d’Investissement (ou Global Banking & Investor Solution, tient le rôle-clé d’intermédiaire entre émetteurs et investisseurs, au service d’une clientèle sélectionnées d’entreprises, d’institutions financières, d’investisseurs et de particuliers fortunés propose en s’appuyant sur une expertise reconnue dans l’ingénierie et le conseil. Les métiers exercés par GBIS sont principalement :
+La banque d’affaire : GBIS fournit à sa clientèle des services de conseil a haute valeur ajoutée, notamment en matière de fusions et acquisitions, d’ingénierie financière, et d’accès aux marchés primaires actions.
+La banque de financement : GBIS fournit à sa clientèle tout type de financement, traditionnels ou structurés, syndiqués ou non et quelles qu’en soient les échéances, ainsi que tout les services d’ingénierie qui leur sont connexes, entre autre les financements export d’infrastructure, de projets et d’acquisitions et d’accès au marchés primaire de dettes.
+La banque de marché : GBIS fournit des services de recherche, de tenue de marchés, de courtage ou d’ingénierie et commercialise des produits sur l’ensemble des marchés (change, monétaire, matière première..).
+La banque privée, Société Générale Private Banking, propose des services sur mesure d’ingénierie financière et patrimoniale à ses clients les plus fortunés, en offrant son expertise en matière de stratégie et expertise en allocation d’actifs, solutions de gestion de portefeuille, solutions de fonds, solutions de marchés et solutions d’ingénierie patrimoniale. 
+
+
+Figure 6 : Implantation de SGCIB
+
+Figure 7 : Implantation de la banque privée
+
+
+La gestion d’actifs au sein de la Société Générale est assurée par la filiale Lyxor Asset Management. Celle-ci propose des services d’investissement et de conseil avec une culture forte dans la gestion des risques. Lyxor fait ainsi partie des leaders en termes d’innovation, de flexibilité et de transparence en matière de gestion d’actifs. 
+
+Figure 8 : Implantation de la gestion d'actifs de la Société Générale
+Enfin, les services aux investisseurs, Société Générale Securities Services, offre une palette de services adaptée aux dernières évolutions des marchés financiers et de la réglementation : entre autres, services de compensation, de conservation et de banque dépositaire et d’administration de fonds et asset servicing. 
+L’entité RESG au sein de la Société Générale 
+La Direction des Ressources du Groupe (RESG) représente le département IT du groupe Société Générale, elle se positionne comme un développeur et un opérateur de plateformes de services partagés pour l’ensemble du Groupe et en pilote de la transformation opérationnelle de l’entreprise. 
+Créée le 2 Mai 2007, RESG rassemble au niveau mondial l’ensemble des serveurs, Datacenter, services de télécommunications et postes de travail. Elle permettra de réaliser, par la mutualisation de ces ressources, 100 millions d’euros de gains récurrents annuels, Contribuant ainsi à la réalisation du Plan d’efficacité opérationnelle (PEO) du Groupe. 
+Au-delà de la réduction de coûts, les métiers bénéficieront au quotidien des services d’une plate-forme partagée plus cohérente et à forte valeur ajoutée. RESG a pour but d’offrir à ses collaborateurs, un environnement professionnel plus riche et diversifié et des opportunités de carrières plus nombreuses. 
+A travers l’organisation de la direction de ressources du groupe nous pouvons distinguer les différents pôles qui la constituent : 
+IMM : Immobiliers d’exploitation 
+ACH : pour les achats 
+INO : pour innovation 
+GTS : Global Technology Services 
+TPS 
+SG GSC (Bangalore)
+SG EBC 
+L’organigramme ci-dessous représente l’entité dans laquelle j’ai effectué mon Stage.
+
+Figure 9 : Organigramme de RESG
+Ainsi, pour mieux comprendre la collaboration entre le département des systèmes d’information et la direction des ressources du groupe, voici un un zoom sur le pole GTS  (Global Technologie Service).
+Présentation du département des services technologiques (GTS)
+Créé en 2009,  RESG/GTS (Global Technology Services) est l'un des plus grands centres européens de services partagés pour les infrastructures informatiques du secteur financier. RESG/GTS supporte aujourd'hui plus de 85% des infrastructures informatiques de Société Générale en France et dans le monde.
+Les infrastructures informatiques regroupent :
+Les postes de travail (ordinateurs, téléphones, messageries...).
+Les centres de calcul hébergeant les serveurs du Groupe.
+Les réseaux informatiques et télécom.
+Pour assurer son bon fonctionnement le département « Global Technology Services » est constitué de plusieurs divisions : 
+La division pour les infrastructures de la banque de détails. 
+La division qui fourni les postes de travails au niveau groupe 
+La division qui gère de réseaux au niveau groupe 
+La division pour les infrastructures de la banque d’investissement et de financement (département Market) dont je fais parti. Elle a pour mission de s’assurer du bon fonctionnement de l’infrastructure informatique ainsi que la relation client pour sont partenaire métier en étroite collaboration avec sa division des systèmes d’information (ITEC). 
+L'expertise réunie au sein de RESG/GTS œuvre à :
+Etre un acteur majeur dans la Transition Numérique du Groupe,
+Assurer la qualité et la continuité 24/24 7/7 des infrastructures ainsi que leur résilience en cas d'incidents,
+Conseiller et accompagner les lignes métiers et directions fonctionnelles dans leur propre transformation,
+Proposer une offre de services diversifiée, innovante et adaptée aux besoins des partenaires internes en recherchant systématiquement l'optimisation des coûts,
+Accentuer la convergence vers les standards technologiques de RESG/GTS.
+Présentation du département Market :
+Crée en 2009 le département market a pour but de s’assurer du bon fonctionnement des applications et de réagir rapidement en cas d’incident ou de problème sur une application ou une technologie, afin de limiter au maximum les impacts sur le business. Il gère et délivre environ 700 projets par ans, avec environ 370 personnes dans le monde (personnel Société Générale), 6 implantations : Paris / Nantes / Londres / New York / Asie / Bangalore. 
+Au niveau Organisationnel il est découpé en plusieurs équipes par technologie d’expertise. En effet, lors de mon expérience au sein du groupe j’au eu l’occasion de travailler avec l’ensemble des équipes Market car elles sont complémentaires. 
+Le département est organisé autour de différents pôles visant à couvrir l'ensemble des besoins clients en termes d'infrastructure informatique :
+
+Les  pôles d’opérations techniques assurant le pilotage de la production des infrastructures sur les domaines suivants :
+La gestion des données de marché et du middleware (MDM)
+Le pilotage des opérations (OPM)
+La gestion des serveurs, du stockage et des sauvegardes (SSB)
+La gestion des bases de données (DBA) 
+Le pôle pilotage et transformation :
+Chief Operating Office, pilotage et transformation (COO) 
+Le pôle application, projets et sécurité :
+La gestion des grands projets, de l’architecture et de la sécurité (APS)
+Le pôle relation clients:
+Les Global Account Manager (MKT/GAM) qui coordonne le suivi des projets clients et reporting clients
+Le pôle  SNO qui est en charge de l’exploitation de SGSS à NANTES.
+Présentation de l’équipe responsable du pilotage des opérations (OPM)
+L’équipe OPM (Operations & Monitoring) fournit des services très variés aux différents partenaires de la SOCIETE GENERALE, au sein de GTS dont :
+Le Centre de commande des opérations pour GBIS qui fournit la gestion d’alertes et le support de niveau 1 pour quelques applications
+L’ingénierie et la maintenance pour des technologies transverses  notamment l’ordonnancement, le monitoring, les outils de sécurité et d’automatisation
+Le support d’intégration des applications SGSS
+Le packaging des applications bureautiques/Citrix
+La tour de contrôle de la production pour le périmètre GBIS ou j’ai effectué mon stage qui a pour principales missions :
+Définir et contrôler l’ensemble des processus de production (Incident, Change, Release, Problem) 
+Contrôler l’ensemble des opérations de production de GTS pour GBIS, incluant les week-ends infra et leur préparation
+Coordonner l’expertise des équipes GTS (MKT, TFO, EUS et RET) sur la gestion et la résolution des incidents
+Fournir les tableaux bords pertinents sur la production, assurer le reporting sur les processus de production.
+
+
+
+
+Le Projet : Déploiement d’un nouvel outil de gestion de l’IT 
+
+Contexte 
+Mon stage au sein de la SOCIETE GENERALE a débuté le 9 Mars 2015. La première semaine fût consacrée à ma formation avant de débuter mes missions.
+Durant cette semaine, différents interlocuteurs m’ont présenté leurs différentes fonctions.
+Le premier jour était consacré à la présentation du groupe, de ses métiers et des différentes entités qui constituent le réseau de la SOCIETE GENERALE. 
+Les jours suivants, nous avons eu droit à une présentation du projet et un aperçu des missions qui m’ont été attribuées. Sachant que le projet concerne exclusivement le département informatique du groupe SOCIETE GENERALE, il était primordial de bien comprendre le fonctionnement et la gestion de son infrastructure. 
+
+Le département informatique de le SOCIETE GENERALE
+ITIL
+Le département informatique de la société générale est aligné ITIL (Information Technology Infrastructure Library) autrement dit Bibliothèque pour l’infrastructure des technologies de l’information. C’est un ensemble d’ouvrages recensant les bonnes pratiques pour le management des services informatiques (ITSM). Ce référentiel a été édicté initialement par l’office public britannique du commerce (OGC) qui maintenant est utilisé par presque toutes les grandes entreprises car il permet une meilleure traçabilité de l’ensemble des actions du département informatique ainsi qu’une amélioration des arbitrages tactiques et une meilleure orientation du service IT vers les besoins et la satisfaction des clients.
+De plus, ITIL permet de contrôler le niveau de qualité des services fournis en se basant sur la norme BS15000 (première norme de gestion des Services Informatiques formelle et internationale).
+On entend par service, l’ensemble des moyens mis en œuvre pour produire de la valeur pour un client, sans que celui-ci n’en supporte ni les coûts spécifiques et supplémentaires ni les risques associés. 
+Par conséquent, une relation client fournisseur est établie. Le fournisseur du service pouvant être interne ou externe à l’entreprise. Pour illustrer l’idée d’un service, en voici une liste non exhaustive :
+Services d’hébergement (Applications, bases de données, sites internet,…)
+Service de support et maintenance applicatif
+Service de messagerie
+ITIL propose des bonnes pratiques pour gérer chaque phase du cycle de vie de service et pour coordonner l’expertise de tous les acteurs en mettant en place des processus et des responsabilités.
+ITSM
+La SOCIETE GENERALE est axée principalement sur la gestion des Incidents, des Problèmes et des Changements.
+La gestion des incidents est l’un des processus des bonnes pratiques d’ITIL concernant « l’Exploitation de services ». Ce processus permet de remettre en services des applications endommagées dans un délai restreint en minimisant l’impact sur les utilisateurs. 
+Le cycle de vie de la gestion d’incidents tourne autour de :
+La détection et enregistrement de l’incident 
+La Classification et communication
+L’investigation
+La Résolution
+La Clôture de l’incident
+
+Ces incidents sont déclarés soit par appels soit par mails au service manager (service de la tour de contrôle de MARKET) dont le rôle est de communiquer rapidement sur l’incident, de fournir des statuts réguliers sur l’avancement de ce dernier et de mobiliser les équipes techniques qui sont en charge d’investiguer et de résoudre l’incident.
+
+Le second processus concerne la gestion des problèmes. 
+Un problème correspond à la recherche d’une cause réelle d’un incident significatif, récurrent ou de plusieurs incidents présentant les mêmes symptômes et impactant le bon fonctionnement de l’IT. Il est initié principalement à la fermeture d’un incident et a pour objectif d’anticiper les incidents potentiels par des mesures correctives afin qu’il ne se reproduise plus.
+
+La gestion des changements est un processus lié à la transition des services.
+Il correspond à l’analyse, le tracé et l’enregistrement de toutes actions réalisées qu’il s’agisse de modification, création ou suppression de l’un des composants de l’infrastructure du système d’information (Serveurs, base de données, service, réseau). Il nous permet de déterminer si un incident est dû à un changement. 
+
+Pour un pilotage efficace des différentes entités de l’IT, il est nécessaire de faire le bilan des différentes activités, et à utiliser ces données pour se fixer de nouveaux objectifs et améliorer les indicateurs de performance. Le reporting constitue l’une des principales activités de l’IT dans la mesure où il dresse une analyse de l’état des services fournit, des performances réalisées et surtout, d’établir des préconisations.
+
+En vue de sortir les clés de performances voulues, les informations sont collectées à partir de différents outils tel qu’ITRACK qui constitue la source de données primaires de toutes les données requises.
+
+ITRACK   
+ITRACK est une solution administrative centralisée pour partager entre les équipes de support IT, les informations concernant les activités liées aux processus de changement, appelés REL (release), de problèmes et d’incidents via le principe du « ticket ».
+Le ticket émis par ITRACK s’appelle un « Case ». Toutes les demandes de l’IT passent par cet outil. Ce dernier, permet de voir le statut sur l’avancée de la requête d’un utilisateur ainsi que l’équipe ou la personne à qui le ticket a été assigné.
+
+Figure 10: Exemple de création de « case » dans iTrack
+
+Problématique
+ITRACK gère plusieurs milliers de tickets par jour pour répondre aux besoins des équipes supports de la SOCIETE GENERALE dans n’importe quel pays où le groupe est implanté. 
+Suite à la restructuration de l’un des partenaires métiers du groupe, il s’est avéré que l’outil n’était plus en mesure de répondre aux besoins de cette nouvelle structure dans la mesure où ses capacités techniques et ses fonctionnalités sont limitées. De plus, ses performances à l’échelle mondiale sont insatisfaisantes. 
+La première solution retenue consistait à le remplacer par un outil appelé JUMP utilisé exclusivement par les banques de détails, le département qui est responsable des réseaux et Télécoms ainsi que le département responsable du bon fonctionnement des outils destinés à l’utilisateur final et de tous les services techniques associés (postes de travail, imprimantes, téléphones, etc.). Néanmoins, cette solution à elle seule n’était pas suffisante, il a donc été décidé de déployer un nouvel outil  qui couvrirait un plus large périmètre : SERVICENOW.
+En effet, SERVICENOW est un outil hautement personnalisable avec un modèle de licence simple et peu coûteux. Il est plus agile sur les processus, automatisant les tâches similaires tout en diminuant la charge administrative nécessaire à la coordination inter-équipes. Il priorise également la sécurité et ce en délivrant une protection dans différentes activités à savoir : la communication, les données et les applications. 
+Le sujet de mon stage concerne le déploiement de SERVICENOW au sein de toutes les équipes (France et international) de GTS.
+Périmètre et durée du projet
+Le centre de services partagés (GTS) a travaillé en étroite collaboration avec le pôle ITEC, direction des systèmes d’informations, qui pilote ce projet et qui est composé de professionnels qui traduisent chaque jour les idées en actions en conjuguant leur expertise des Technologies de l'Information avec une compréhension en profondeur de la banque d'investissement. Il s’agit donc de la migration de 7000 utilisateurs provenant de différents partenaires métiers ainsi que leurs équivalents côté GTS, c'est-à-dire toutes les équipes en charge de l’infrastructure informatique de ces partenaires. 
+Voici les entités qui doivent être migrées vers SERVICENOW :
+CLIENT & TRADING TECHNOLOGY (ITEC/CTT) : fournit des solutions informatiques dédiées aux activités front-office des marchés de capitaux (MARK) et aux activités «front-to-back» (de bout en bout) de Lyxor et du pôle Matières premières. ITEC/CTT se concentre plus particulièrement sur les marchés électroniques, les transactions en temps réel, les solutions de gestion du risque et les applications de vente pour MARK.
+DEAL PROCESSING TECHNOLOGY (ITEC/DPR) : est en charge du système global de gestion des opérations pour les activités de marché, de la saisie à la transmission aux systèmes comptables et de risque. ITEC/DPR garantit la livraison des projets et la maintenance de tous les logiciels liés au traitement des opérations des activités de MARK, et regroupe les applications de GBIS relatives à la supervision réglementaire et au contrôle des risques opérationnels. ITEC/DPR gère les demandes pour les clients OPER, SAFE et SEGL.
+FINANCING & CLIENT COVERAGE TECHNOLOGY (ITEC/FCC) : garantit la livraison des projets et la maintenance de tous les logiciels liés aux activités de financement et de couverture client. Par conséquent, ITEC/FCC définit la stratégie IS de GLFI et de CORI et gère les demandes pour les clients GLFI, CORI et OPER/FIN.
+CORPORATE TECHNOLOGY (ITEC/CSY) : garantit l'homogénéité internationale, la livraison des projets et la maintenance de tous les logiciels liés aux activités de ressources humaines, de frais, de sécurité et ITEC.
+RISK, REFERENTIAL & FINANCE TECHNOLOGY (ITEC/RRF) : définit les stratégies IT de FIND et de RISK et garantit la livraison des projets et la maintenance de tous les logiciels liés aux activités de gestion des risques, de référentiels et de financement.
+SECURITIES SERVICES TECHNOLOGY (ITEC/SGS) : pilote la stratégie des SI de SGSS en étroite collaboration avec la stratégie IT du Groupe SG ; anime la filière informatique et gère l'ensemble des prestations IT délivrées à SGSS ; conçoit, développe et gère l'ensemble des SI de SGSS.
+PRIVATE BANKING TECHNOLOGY (ITEC/PRI) : définit et pilote la stratégie IT de la Banque Privée (PRIV) du Groupe Société Générale et garantit la livraison des projets et applications informatiques qui y sont reliés.
+Vient ensuite, les utilisateurs de GTS et les régions.
+(GTS/MKT) : Global Technologie Services/ Market
+NEWEDGE : définit différentes solutions d’intégration du SI en considérant les risques liés aux contraintes sécuritaires.
+GTS Western Europe : Poursuit la transformation de GTS et converge vers des solutions et des normes à communes à toutes les lignes métiers des pays supportés
+GTS AMERICAS : Répond aux exigences locales et contribue à maintenir des normes communes.
+GTS ASIA PACIFIC : Travaille en étroite collaboration avec les lignes métiers et les équipes de RESG/GTS
+SG GSC BANGALORE : Centre global de services partagés pour le groupe basé à Bangalore agit en tant que plateforme régionale pour l’Asie Pacifique.
+Le projet a débuté en 2014 et a une date prévue de livraison de l’outil dans son intégralité fin 2016.
+Les différentes phases du projet
+
+Figure 11: Les 4 phases d’un projet
+L’analyse des besoins 
+La première phase du projet consiste à analyser les besoins en premier lieu puis définir les objectifs à atteindre.
+Tout d’abord, il a fallu identifier les différents points pour lesquels iTrack est dans l’incapacité de répondre aux besoins du GBIS et par conséquent lister les besoin quant à son remplacement par un outil plus performant. 
+Puis il a fallu valider la faisabilité et l’opportunité du projet en désignant un pilote. C’est un prototypage ou un test se voulant pré-opérationnel visant à tester le produit afin d’en évaluer les coûts, la pertinence économique et technologique, avant de développer des améliorations si nécessaires.
+Enfin, dans cette première phase, il a fallu estimer les ressources nécessaires, identifier les personnes-clés, nommer le projet et initier son démarrage officiel.
+La phase de construction et de planification
+Phase de construction : Séparation du projet en différents volets qui seront menés comme des projets en parallèle avec des équipes de travail spécifiques.
+Déploiement de l’architecture et de l’infrastructure : spécification et validation par le responsable des processus GTS à implémenter dans SERVICENOW (Incident/ Problem/ Request/ Change/ Release/ Major Incident) 
+Développement d’Interfaces : Développement de bridges entre les différentes interfaces avec le nouvel outil. La définition des bridges a eu lieu lors de workshop
+Configuration des données : groupes de support, circuit (validation, approbation..) , catalogue de services ..
+Sécurité : Implémentation de toutes les exigences SAFE (équipe en charge de la sécurité du réseau du groupe) ainsi que les critères de régulations
+Reporting : Assurer la continuité des rapports en temps réel dans SERVICENOW ainsi que la possibilité de faire de l’extraction de données pour faire des rapports complexes
+Chacun de ces projets parallèles se découpe en différentes phases que j’ai moi-même menées à bien pour mes deux sous-projets (décrits ultérieurement)
+Définition des acteurs du « sous-projet » :
+Sponsors
+Directeur du projet 
+Managers du projet
+Responsable du produit
+Responsable des process
+Solution Designer
+Développeurs d’applications 
+..
+Lister les tâches nous concernant : Définir et décrire les démarches de migrations des équipes de production internationales sur le nouvel outil
+Organiser les séances de formation des équipes
+Mettre en place des tableaux de suivi organisationnel
+Participer aux décisions de configuration de l’outil
+Etre le point de contact des futures équipes migrées et suivre les besoins et amélioration à apporter
+Remonter les alertes fonctionnelles et techniques
+Phase de planification 
+Cette phase a plusieurs buts : 
+Affecter une durée aux tâches
+Organiser les tâches dans le temps
+Définir les priorités
+Poser les jalons
+C’est la base la plus appréciée pour communiquer largement et pour aider les équipes à s’organiser et prévoir la charge à venir ?
+
+Figure 12 : Macro Planning du projet : en rouge mes 2 « sous projets »
+La phase de conduite et de pilotage
+Les Pré requis :
+Les données à configurer doivent être correctes. Il faut les récupérer dans les différents référentiels pour pouvoir les charger dans SERVICENOW par la suite. Il s’agit des groupes de supports, des noms des utilisateurs, des noms des serveurs et bases de données etc
+Il a fallu aussi faire un inventaire complet de tous les services GTS et les nettoyer si besoin. En effet, la migration vers le nouvel outil est une bonne opportunité pour nettoyer les données existantes et charger des données propres dans le futur outil.
+Le deuxième pré-requis concerne les outils satellites à iTrack qui devront donc être migrés sur le nouvel outil. Je détaillerai cette partie plus tard, étant l’un de mes deux sous-projets.
+Troisième pré-requis : le catalogue de service doit être recréé dans le nouvel outil. Cette partie sera également détaillée ultérieurement puisque c’est mon deuxième projet.
+De plus, même si cela ne consiste pas en un pré requis en soi, une étape obligatoire et très importante concerne la gestion du changement.
+En effet, l’arrivée d’un nouvel outil inquiète toujours. L’accompagnement au changement est donc obligatoire. 
+Pour cela, j’ai mis en place : 
+Des sessions de formations de la population Pilote définie (par Webex par exemple)
+Ecriture et suivi des guides d’utilisateurs
+Mise en place d’exercices et demande de création de vidéos
+Accompagnement et support à l’auto-formation des futurs utilisateurs
+
+Figure 13 : Mise en place du support
+J’ai également dû : 
+Motiver les équipes
+Communiquer autour du projet
+Réunions d’avancement et bilans d’étapes
+Contrôler l’avancement 
+Par la suite il restera les étapes suivantes : 
+Mettre en place et analyser des indicateurs de suivi
+La phase de clôture et d’évaluation
+Cette dernière phase consiste à : 
+Valider le projet en s’assurant que les différents volés ont été implémentés et déployés, les exigences de sécurité ont été respecté. 
+Livrer l’outil : avec un support particulier des administrateurs de la SOCIETE GENERALE qui doivent être opérationnels pour superviser le fonctionnement des plateformes à l’aide de documentation et formations préalablement établis. 
+Communiquer
+Valider les méthodes utilisées
+Capitaliser l’expérience
+
+
+
+Mes deux projets
+Projet 1 : La migration des 64 outils satellites
+Qu’est ce qu’un outil Satellite ?
+Un outil Satellite est un outil qui interagit et dépend d’un autre outil. En l’occurrence ici nous parlons d’outils satellite à iTrack.
+Au décommissionnement d’ITRACK, ces outils devront être en mesure de fonctionner correctement avec SERVICENOW. Cela signifie donc que ces outils devront être interfacés avec SERVICENOW.
+
+
+Figure 14 : Les outils satellites
+Ma mission
+Ma mission a consisté dans un premier temps à contacter les différentes équipes IT. J’ai alors eu un groupe de travail d’environ 8 personnes avec lesquels nous avons recensé tous leurs outils et lister tous les détails de ces outils : leurs noms, leurs urls, les spécificités techniques telles que : nom du serveur, de la base de donnée, du langage utilisé, type de connexion entre cet outils et iTrack, fréquence d’utilisation etc 
+Ce travail nous a permis de mettre en place deux communautés de développeurs.
+La première communauté correspond aux Outils Satellite qui ont besoin d’être rattachés au web services de SERVICENOW car ils ont besoin d’changer des données dans les deux sens avec iTrack. 
+Un Web service est un programme informatique permettant la communication et l’échange de donnée entre les applications.
+Ces outils sont donc ceux qui ont besoin de créer et de mettre à jour les données propres d’iTrack.
+La deuxième communauté, comprend les outils Satellite qui font uniquement du reporting sur les données d’iTrack. Cela signifie qu’ils ont juste besoin de lire les données de la base répliquée d’iTrack. 
+Nous avons organisé des points hebdomadaires avec les développeurs afin de leur fournir les éléments nécessaires à savoir les comptes pour s’identifier sur le nouvel outil ainsi que la documentation nécessaire à la compréhension et l’utilisation des Web services fournit par l’équipe ServiceNow.
+Très vite, nous nous sommes rendu compte que la documentation était incomplète. Il a donc fallu chercher une solution alternative et désigner quatre outils pilotes pour tester les Web services et compléter la documentation fournie par Service Now. Cette communauté a également été le moyen pour ces personnes d’échanger sur les problèmes rencontrés tels que des bugs de codes et de trouver des solutions ensemble.
+
+Figure 15: Espace communautaire mis en place pour les échanges sur le WebService
+
+Figure 16: Exemple de morceaux de codes échangés pour aider au débug
+
+Etant le point de contact entre ces « développeurs Pilote » et le reste de la population des futurs développeurs qui seront en charge de migrer les 60 autres outils, j’ai été en charge de communiquer sur les avancées et points bloquants. J’étais également en charge de remonter au niveau des managers du projet global toutes les alertes fonctionnelles et techniques. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Figure 17: Partie de mon fichier de recueil des informations sur les outils satellites
+La migration du catalogue de services d’iTrack : EasyTrack
+Qu’est-ce qu’un catalogue de service ?
+Le catalogue de service est un portail web qui regroupe et met à disposition tous les types de demandes que les clients peuvent trouver et envoyer aux équipes supportant l’infrastructure (équipe Market). Il s’agit tout simplement d’un recueil de demandes prédéfinies (templates) comportant les bonnes informations ou les bonnes questions utiles à une prise en charge rapide des équipes (informations sur le type de requête, incident, demande d’accès, relance d’un serveur, demande de reset de mot de passe ..). 
+La problématique
+Ce catalogue, appelé EasyTrack, est lié à iTrack car les « tickets » créés arrivent dans l’outil ITSM utilisé, en l’occurrence iTrack. Le décommissionnement d’iTrack entraine donc la nécessité de créer un nouveau catalogue qui sera basé sur SERVICENOW.
+
+Figure 18: Page d’accueil du catalogue EasyTrack : recueil de templates
+De plus, EasyTrack dispose de plus de 1200 templates et il n’existe pas de solution technique pour le smigrer en masse dans le nouveau catalogue. Cela signifie que les équipes vont devoir recréer tous leurs templates un par un dans le nouvel outil.
+Enfin, SERVICENOW est aligné ITIL et dispose de vrais processus bien définis qui doivent être suivis. Or, dans iTrack, les noms utilisés pour définir les différents process sont flous et pas toujours utilisés correctement. Une catégorisation doit donc être refaite.
+
+Figure 19 : Le catalogue de services : Easytrack et sa problématique
+Mes actions
+
+Figure 20 : Mes actions
+Nous avons réalisé une étude sur l’utilisation des 1200 templates.
+Il s’est avéré que seulement 20% des templates représentaient à eux seuls 80% de l’utilisation globale du catalogue. Autrement dit, il est possible d’effectuer un nettoyage sur l’ensemble de ces templates et ne recréer que les plus importants et utiles. Cela permettrait aux équipes de gagner beaucoup de temps puisqu’environ 10 équipes se partageront alors la création d’environ 300 templates, en comptant entre 10 minutes et 30 minutes par création.
+Ensuite, avec mes contacts sur ce projet (je travaillais avec environ 15 personnes), nous avons mis en place des points réguliers pour les former sur la création de templates dans le nouvel outil et pour les aider dans la catégorisation à faire pour suivre les process ITIL.  
+
+Figure 21: Vue du nouveau catalogue de ServiceNow
+
+Figure 22: Première page pour la création d’un template dans Service Now
+
+A ce jour, les templates sont toujours en cours de création dans le nouvel outil.
+
+
+
+
+CONCLUSION
+Ces 6 mois de stage au sein de la SOCIETE GENERALE m’ont beaucoup apporté tant sur le plan humain que sur le plan professionnel.
+Les difficultés que j’ai rencontrées au cours de mon stage et qui m’ont retardée dans la prise de mes fonctions ont été liées principalement à la complexité des termes employés par la SOCIETE GENERALE. En effet, cette dernière ayant son propre vocabulaire, l’absence de documentation pour détailler ces termes n’aide pas à une rapide intégration. Par ailleurs, le groupe ayant plusieurs divisions métiers, il m’a fallu du temps pour assimiler les activités réalisées par les différentes entités de l’organisation.
+Concernant le projet du déploiement de ServiceNow, un projet à étendue internationale avec plusieurs composantes à mettre en place, il m’a été difficile de comprendre d’une part le contexte global de ce projet (étant arrivée au cours de sa réalisation) et d’autres part, d’identifier tous les acteurs du projet. 
+J’ai aussi fait face à des imprévus et des contraintes liés à la gestion de projet, à cause des coupes budgétaires affectées à ce dernier et qui ont eu pour conséquences des retards de livraison de certaines fonctionnalités entrainant la revue des priorités.
+Lors de l’attribution de mes tâches, je me suis rendue compte de la complexité de certaines d’entre elles car il me manquait les notions techniques nécessaires à la compréhension des sujets. 
+La non-coopération ou démotivation de certains contributeurs m’ont parfois bloquée dans la réalisation de mes actions. 
+Tous ces problèmes m’ont poussée à me dépasser et à développer de nouvelles compétences telles que la persévérance.
+
+Bilan professionnel
+Ma curiosité m’a poussée d’une part à aller voir les autres afin de mieux comprendre l’organisation du groupe et me situer dans celle-ci et d’autre part à m’auto former sur le plan technique pour améliorer ma compréhension de mes différentes missions. Cela m’a permis de mener à bien le pilotage  des projets qui m’ont été confiés en mettant en œuvres les compétences acquises lors de mes années d’étude.
+La coordination des équipes et le suivi d’avancement des projets ont nécessité le développement de qualités telles que la rigueur, la maitrise du temps de travail ainsi que l’obligation de s’organiser correctement. De par tous les échanges que je devais avoir quotidiennement avec mes différents contributeurs, ma prise de parole en public s’est nettement améliorée. 
+Les imprévus liés au projet tels que les coupes budgétaires ou le manque de documentation m’ont poussée à revoir mon plan d’action et à mettre en place de nouvelles solutions. J’ai appris à prévoir et surtout à savoir m’adapter aux situations et à rebondir si besoin.
+Suite à la bonne maitrise de mon temps de travail, j’ai pu consacrer une partie de mon temps à la découverte des différentes activités de mon service et y participer. Cela m’a permis de découvrir un métier stimulant qui est en constante évolution et amélioration ce qui est d’autant plus motivant et nous pousse à la performance.
+Ma tutrice n’ayant pas la possibilité de me coacher continuellement et de participer au suivi de mes projets quotidiennement, j’ai dû être assez autonome pour gérer mes missions, avancer dans mes actions et lui faire des points d’avancement.
+Bilan personnel
+La banque est un domaine formateur sur tous les plans. Au niveau social, on apprend à établir un bon contact avec les différents contributeurs du projet, à travailler en équipe et s’entraider les uns les autres, à prendre en compte les remarques de ses supérieurs pour fournir un travail de qualité.
+Dans la mesure où le groupe est implanté dans plusieurs pays, j’ai pu découvrir différentes cultures, anglo-saxonne et indiennes ce qui m’a permis de développer mon anglais afin d’interagir avec ces différentes communautés.
+Les relations entre les différents membres de mon équipe sont basées sur le respect et l’amitié et ont  permis de créer une ambiance agréable qui est d’autant plus motivante. 
+Il est vrai que c’est un métier prenant mais la passion que j’ai de relever les challenges et cette curiosité intellectuelle m’ont poussée à vouloir rejoindre cette équipe dont je fais partie dès à présent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Table des figures
+
+Figure1: Implantation de la Société Générale dans le Monde	- 4 -
+Figure 2 : les 3 lignes métiers de la Société Générale	- 4 -
+Figure3 : implantation de la banque de détail en France	- 5 -
+Figure 4 : implantation de la banque de détail à l’international	- 5 -
+Figure 5 : Implantation des services financiers de la Société Générale	- 6 -
+Figure 6 : Implantation de SGCIB	- 7 -
+Figure 7 : Implantation de la banque privée	- 7 -
+Figure 8 : Implantation de la gestion d'actifs de la Société Générale	- 8 -
+Figure 9 : Organigramme de RESG	- 9 -
+Figure 10: Exemple de création de « case » dans iTrack	- 14 -
+Figure 11: Les 4 phases d’un projet	- 16 -
+Figure 12 : Macro Planning du projet : en rouge mes 2 « sous projets »	- 18 -
+Figure 13 : Mise en place du support	- 19 -
+Figure 14 : Les outils satellites	- 20 -
+Figure 15: Espace communautaire mis en place pour les échanges sur le WebService	- 21 -
+Figure 16: Exemple de morceaux de codes échangés pour aider au débug	- 21 -
+Figure 17: Partie de mon fichier de recueil des informations sur les outils satellites	- 22 -
+Figure 18: Page d’accueil du catalogue EasyTrack : recueil de templates	- 23 -
+Figure 19 : Le catalogue de services : Easytrack et sa problématique	- 23 -
+Figure 20 : Mes actions	- 24 -
+Figure 21: Vue du nouveau catalogue de ServiceNow	- 24 -
+Figure 22: Première page pour la création d’un template dans Service Now	- 25 -
+
+
+
+
+Webographie 
+
+https://fr.wikipedia.org/wiki/Information_Technology_Infrastructure_Library
+http://www.societegenerale.com/fr/connaitre-notre-entreprise/metiers/carte-des-implantations
+https://technet.microsoft.com/fr-fr/library/ms189826(v=sql.90).aspx
+https://sbc.societegenerale.com/groups/gbis-impulse
+https://sgshare.ressources.socgen/gts/mktopm/qps/default.aspx?Redirect=1
+https://msdn.microsoft.com/fr-fr/library/ms159106.aspx
+http://gtspedia.fr.world.socgen/index.php/Welcome_GTS
+http://gtspedia/index.php/MKT-OPM
+
+
+
+
+
+
+Annexe 
+Process Golden Rules: Release management
+Reminder: the objective of Release Management is to enable beneficial deployment to be made, with plan maintenance schedule. 
+→ Use standardized methods and procedures for efficient and prompt handling of all modifications that may have an impact on IT services 
+1. Any deployment must have an associated approved REL in ITrack before being executed. 
+Reminder: a release deployment is the addition, modification or removal of anything that could have an effect on IT Services. It is implemented in ITrack as a ‘REL’. 
+2. All demands with release towards GTS must be completed as early as possible via an enhancement or a defect (Change) or a RFC (Request for change). The GTS RRB schedule control is based on Wednesday evening to the next Thursday evening. Assessment of REL must be completed before each RRB review and release start date. 
+3. It is mandatory to link software release to an enhancement or a defect. (Non software releases may not be linked to an enhancement or a defect) 
+4. It is mandatory to link the request, change or the project reference to the release description. 
+5. Once the Release is executed, its status must be set to: Delivered (success), reviewed (success validated by a PIR) or cancelled (deployment didn't take place or rollback performed) Not closing a REL creates an operational risk since one cannot know whether the change has been executed or not! 
+6. Workflow type should be defined according to the below definitions: 
+Standard release for a pre-approved (by skill team) operation with accepted risk, low impact and full description. Emergency release to solve or prevent an imminent high-priority incident from happening. The Outage reference must be mentioned in the release. 
+When a BUG has (or could have) a major business impact with no acceptable workaround and an immediate action is required with no delay OR when a quick Enhancement should be implemented, in case of regulatory or business requirements or even senior management decision => Emergency justification must always be provided in a way that any actor understands the reasons of emergency context (manager, coordinator, technical and functional support, CIO…). General release for any other operation. Should be submitted at least 12 business days before operation for infra WE, otherwise 5 business days. If too late, the REL submitter should liaise with the infra WE sponsor or the Alert Correspondent. 
+Tactical release for production which has to be delivered in short delay by one team and that doesn’t require an impact/risk analysis from other stakeholder. This release must be submitted at least 2 business days before deployment. 
+7. Summary: synthesize the release in an understandable short nominal sentence. 
+Release on SGSS perimeter should have a summary starting by “[SGSS]”. 
+Release on NEWEDGE perimeter should have a summary starting by “[NEWEDGE]”. 
+Release on PRIV perimeter should have a summary starting by “[PRIV]”. 
+Release on SGCIB perimeter should have a summary starting by “[SGCIB]” 
+Release which concern all GBIS perimeter should have a summary starting by “[GBIS]” (optional). 
+8. Description contains the details of the operation, or refers to an attached document with the following information: Explicit content, actors and impacts on the rest of IS: other applications, infrastructure, business process... 
+Adequacy with business / IT / infrastructure / production / security expectations [Test results, controls...] 
+Pre-requisites for implementing operations (from business, IT, infra, production perspective) 
+Detailed roll-out plan (or a link to roll-out public document if any) 
+9. Impact: the value of the field will set the approval level of the Release. The higher the impact is, the higher the approval level is required. 
+10. Risk: This field will assess the consequence of a failure: Low, Medium (service affected) or High (disruption) Any operation with a medium or high risk should use REL template #12345, and include a detailed rollback plan. 
+11. Start Date / End Date / Expected Downtime are followed and accurate. Downtime refers to the service provided, not assets. For operation lasting 8 hours or more, a detailed chronogram is mandatory. 
+12. Release timeframe is chosen to minimize the Impact (and the risk) of the operation on business activity:Significant infrastructure operation (on production) should be planned during infra WE 
+To prevent any issue after WE operations, no Release should be planned on Monday morning (until 12:00) 
+Expiries, moratoriums and freeze periods are critical for business. Any release impacting those services (including transversal operations) should have a validated derogation form attached. 
+13. There must be attached case(s) for each set of action by teams involved. These teams must validate the release. Done by checking the appropriate “Required skill teams” fields, or by manually adding approvers. Teams with no action can be notified. 
+14. Once a release is submitted to approbation, it should not be modified (nor the timeframe, nor the cases it contains, etc…)Modifying a release after its submission can require approbation workflow reset. Liaise with MKT IPCM (48000) for more information. 
+15. ITEC Release managers are in charge of the whole release object lifecycle, from creation to closure with their PIR (post implementation review) and coordinate with the application Change Manager [see ITEC CMRM definition] 
+16. On ITEC owned applications, Appli/Infra field must be: APPLI for ITEC releases and INFRA for GTS releases. Release manager should consequently be in the same entity. 
+17. Obtain a dispensation for Release which is concerned by an event (ARM, Epxiry…). All information about derogation process are available here. 
+18. GTS template is mandatory for Infra Weekend Releases or for Releases with Risk > Low
+
+Process Golden Rules: Incident management
+Reminder: the objective of Incident Management is to restore a normal service operation. Root cause identification and mitigation belongs to Problem Management. 
+1. An incident in Outageware for any unplanned interruption / reduction in the quality of an IT Service to our customers. Technical resolution steps should be stored in an ITrack case. 
+Usage of Outageware templates is strongly encouraged to speed up usual incidents declaration (standard title, known impact...) 
+2. The outage is written with a correct syntax / spelling, in a "customer-understandable" view, not a technical one. 
+3. When service is interrupted, the incident is declared ASAP in Outageware to inform our customers. 
+Outside business hours, communication in Outageware can be done after first investigations. 
+4. Incidents status: 
+Warning [mandatory] = Initial status. 
+Work in progress [optional] = Significant progress in the incident resolution (esp. major incidents). 
+Resolved [mandatory] = Infrastructure service is restored (even on backup scenario). 
+Post-mortem [optional] = After "Resolved" status, to provide more explanation and ITrack Problem reference (esp. major incidents). 
+Outage type "Infomation" is available for any event, not considered as an incident, that needs to be communicated to customers. 
+5. Title: short nominal sentence describing the incident. Don't change it during incident lifecycle. 
+6. Dates: 
+Start date = Actual start date of the incident (not the date the outage is written or alarm is discovered). 
+Estimated end date = If possible. 
+End date = When the infrastructure service is restored, potentially on backup scenario (eg: service running on backup server) 
+"Downtime" field is automatically computed from Start and End dates. 
+7. Severity is mandatory. It is defined in the Severity Matrix. It may be re-assessed during or after incident resolution. 
+8. Impact means consequences on the service, as much as possible in a customer-oriented wording. 
+9. Source [optional]: If known, root cause of the incident (eg: human error). It is not the source of the alert (eg: Pepper monitoring) 
+
+Processes Golden Rules - Problem Management
+Reminder: the objective of Problem Management is to prevent incidents (in a reactive or a proactive way), or to minimize the impact of incidents that cannot be prevented. 
+→ Find root causes of incidents, determine the resolution, ensure it is implemented. 
+
+1. A Problem must be recorded in ITrack to look for the root cause of an incident and to follow-up the associated action plan 
+2. Creating a problem is: 
+mandatory for any high severity incident. 
+It must be created 2 business days after the incident resolution at the latest. In that case, priority should be the highest (*** in ITrack) and an incident report attached; 
+recommended for recurring / tricky incidents or for proactive reasons. 
+If the same incident occurs several times, il is not necessary to record a new problem. Edit the description of the existing one to specify there has been a new occurrence. 
+3. For incident-related problems, the Problem ID is communicated in the Post-Mortem Outageware . 
+And the Outage field of the problem must be filled in (in English) with the related outage ID(s). 
+4. The Summary contains a short and clear sentence on the subject of the Problem (not a copy/paste of the related outage title) 
+5. Each action must be assigned via post-action cases attached to the ITrack Problem. The incident case (with technical details) can also be attached as source-case of the problem. 
+6. Problem should have a wished date. This wished date should match the latest post-action case completion. 
+7. The Problem Coordinator is accountable for the problem, and in charge of the follow-up of the cases assigned to one or multiple actors. His name is given in the Assignee field of ITrack. The process is led by the Problem Manager within OPM team, who chairs regular meetings with Problem coordinators and reports to the Management. 
+8. Status of the Problem is either: 
+Open (Problem initiated), 
+Work in Progress (first actions are started), 
+Pending (only remaining pending actions outside GTS -to be agreed with Problem Managers) 
+Resolved (all actions done, pending validation from Problem Managers) 
+Closed (all actions are closed, validated by Problem Managers) 
+Closed-unresolved (actions are closed-unresolved, validated by Problem Manager) 
+An action cannot be switched to "close-unresolved" status without a justification agreed by Problem Manager. 
+
+
+
 
 
 
